@@ -1,0 +1,36 @@
+{
+  "name": "am-ismail-platform-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker — منصة أ/ إسماعيل عماد التعليمية",
+  "type": "module",
+  "main": "index.js",
+  "//": "============================================================",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail",
+    "secret:firebase": "wrangler secret put FIREBASE_SERVICE_ACCOUNT",
+    "secret:jwt": "wrangler secret put JWT_SECRET",
+    "secret:ai-key": "wrangler secret put AI_API_KEY",
+    "secret:ai-provider": "wrangler secret put AI_PROVIDER",
+    "setup:secrets": "npm run secret:firebase && npm run secret:jwt && npm run secret:ai-key && npm run secret:ai-provider"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "cloudflare": {
+    "compatibility_date": "2024-09-23",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ]
+  }
+}

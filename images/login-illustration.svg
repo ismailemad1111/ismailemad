@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-labelledby="title desc">
+<title id="title">منصة تعليمية</title>
+<desc id="desc">صفحة كراسة عليها تصحيح بالقلم الأحمر، وقلم رصاص وماركر</desc>
+<defs>
+<pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#1C2B84" stroke-opacity=".08" stroke-width="1"/></pattern>
+</defs>
+<rect x="20" y="20" width="480" height="320" rx="28" fill="#E7EAF8"/>
+<rect x="20" y="20" width="480" height="320" rx="28" fill="url(#grid)"/>
+<rect x="130" y="52" width="260" height="262" rx="14" fill="#10175A" opacity=".16" transform="translate(8 10)"/>
+<rect x="130" y="52" width="260" height="262" rx="14" fill="#FFFFFF" stroke="#1C2B84" stroke-width="3"/>
+<path d="M352 52v262M358 52v262" stroke="#D8322A" stroke-width="2" opacity=".85"/>
+<path d="M156 108h170M156 140h170M156 172h170M156 204h120M156 236h150M156 268h90" stroke="#1C2B84" stroke-opacity=".22" stroke-width="2"/>
+<rect x="156" y="82" width="120" height="14" rx="3" fill="#FFCF33"/>
+<path d="M156 100c40-8 90-8 150 0" fill="none" stroke="#1C2B84" stroke-width="5" stroke-linecap="round"/>
+<path d="M286 215l22 24 46-56" fill="none" stroke="#D8322A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="translate(398 70) rotate(28)">
+<rect width="20" height="150" rx="3" fill="#FFCF33"/>
+<rect width="20" height="22" rx="3" fill="#D8322A"/>
+<path d="M0 150h20l-10 26z" fill="#F3D9A4"/>
+<path d="M6 168h8l-4 8z" fill="#141A3C"/>
+</g>
+<circle cx="98" cy="286" r="22" fill="#FFCF33"/>
+<path d="M88 286l7 7 12-14" fill="none" stroke="#141A3C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
