@@ -1,0 +1,5 @@
+.g{font-family:system-ui,sans-serif;padding:16px;text-align:center}
+#gTitle{color:rgb(10,120,60)}
+button{margin:6px;padding:10px 16px;font-size:16px}
+@font-face{font-family:"GT";src:url("/game-test/font.woff2") format("woff2");font-display:block}
+#gStatus{font-family:"GT",serif}
