@@ -1,0 +1,50 @@
+/** Manasa Editorial Learning — centralized design tokens */
+:root {
+  color-scheme: light;
+  --color-primary: #FF4654;
+  --color-primary-dark: #D92E3D;
+  --color-primary-light: #FFF0F1;
+  --color-primary-strong: #B71F2D;   /* hover لزر أساسي؛ تباين أعلى مع النص الأبيض */
+  --color-red: #FF4654;
+  --color-red-dark: #D92E3D;
+  --color-red-light: #FFF0F1;
+  --color-yellow: #E8B94F;
+  --color-yellow-dark: #7A5A0A;
+  --color-yellow-light: #FFF7DF;
+  --color-green: #4FAF83;
+  --color-green-dark: #26734F;
+  --color-green-light: #E8F6EF;
+  --color-blue: #6498EF;
+  --color-blue-dark: #285BA8;
+  --color-blue-light: #EDF3FF;
+  --color-purple: #A58AE8;
+  --color-purple-dark: #6448A8;
+  --color-purple-light: #F2EDFF;
+  --color-orange: #C66B38;
+  --color-orange-dark: #8F4522;
+  --color-orange-light: #FFF0E6;
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-surface-soft: #FFF0F1;
+  --color-border: #E7E3E4;
+  --color-border-strong: #CFC7C9;
+  --color-text: #17191D;
+  --color-text-muted: #68666A;
+  --color-dark-section: #17191D;
+  --color-charcoal: #17191D;
+  --color-coral: #FF4654;
+  --color-misty-rose: #FFF0F1;
+  --gradient-signature: linear-gradient(135deg, #FF4654 0%, #FF8B97 48%, #FFF0F1 100%);
+  --font-display: 'Alexandria', 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+  --font-arabic: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif;
+  --font-english: 'Inter', 'IBM Plex Sans Arabic', sans-serif;
+  --fw-regular: 400; --fw-medium: 500; --fw-bold: 600; --fw-extrabold: 700; --fw-black: 700;
+  --fs-xs: 12px; --fs-sm: 14px; --fs-base: 16px; --fs-md: 18px; --fs-lg: 21px; --fs-xl: 25px; --fs-2xl: 30px; --fs-3xl: 38px;
+  --lh-tight: 1.3; --lh-normal: 1.7; --lh-loose: 1.9;
+  --space-4: 4px; --space-8: 8px; --space-12: 12px; --space-16: 16px; --space-20: 20px; --space-24: 24px; --space-32: 32px; --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-96: 96px;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-pill: 999px; --radius-circle: 50%;
+  --shadow-soft: 0 1px 2px rgba(23,25,29,.04); --shadow-card: 0 8px 28px rgba(23,25,29,.06); --shadow-lifted: 0 14px 36px rgba(23,25,29,.12); --shadow-modal: 0 28px 70px rgba(23,25,29,.22); --shadow-offset: 4px 4px 0 rgba(255,70,84,.14);
+  --touch-min: 44px; --z-base: 1; --z-header: 100; --z-bottom-nav: 200; --z-modal: 1000; --z-toast: 2000;
+  --transition-fast: .15s ease; --transition-normal: .25s ease;
+  --safe-top: env(safe-area-inset-top, 0px); --safe-bottom: env(safe-area-inset-bottom, 0px);
+}

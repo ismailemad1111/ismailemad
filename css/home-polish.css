@@ -1,0 +1,359 @@
+/* ============================================================
+   home-polish.css — لمسة تحسين بصري وحركي للصفحة الرئيسية فقط
+   ------------------------------------------------------------
+   تُحمَّل بعد screens.css وeditorial-redesign.css. لا تغيّر المحتوى
+   ولا الوجهات ولا الألوان الأساسية، وتعتمد transform/opacity.
+   ============================================================ */
+
+:root {
+  --ease-flow: cubic-bezier(.22, 1, .36, 1);   /* انسياب ناعم بلا ارتداد */
+}
+
+/* ---------- 01 — الترويسة: وهج هادئ ثابت ---------- */
+.home-welcome {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-welcome::before,
+.home-welcome::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.home-welcome::before {
+  width: 260px;
+  height: 260px;
+  inset-inline-end: -90px;
+  top: -120px;
+  background: radial-gradient(circle, rgba(255, 70, 84, .16) 0%, rgba(255, 70, 84, 0) 70%);
+}
+
+.home-welcome::after {
+  width: 180px;
+  height: 180px;
+  inset-inline-start: -70px;
+  bottom: -90px;
+  background: radial-gradient(circle, rgba(232, 185, 79, .18) 0%, rgba(232, 185, 79, 0) 70%);
+}
+
+.home-welcome-inner { position: relative; z-index: 1; }
+
+@media (max-width: 700px) {
+  .home-welcome { border-radius: 0 0 28px 28px; }
+}
+
+/* ---------- 02 — بطاقة «الأهم الآن»: اللحظة الأبرز في الصفحة ----------
+   هي أول ما يُطلب من الطالب فعله، فتأخذ اللون الكامل (أحمر العلامة)
+   وكل ما حولها يبقى هادئًا. لون كل حالة يتبع data/variant من JS. */
+.hero-action.hero-action {
+  --hero-a: #FF4654;
+  --hero-b: #D92E3D;
+  --hero-c: #A81B29;
+  gap: 14px;
+  padding: 20px 18px;
+  border: 0;
+  border-radius: 24px;
+  color: #FFFFFF;
+  background:
+    radial-gradient(70% 140% at 0% 0%, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 55%, var(--hero-c) 100%);
+  box-shadow: 0 16px 36px rgba(217, 46, 61, .28);
+  transition:
+    transform .35s var(--ease-flow),
+    box-shadow .35s var(--ease-flow);
+}
+
+.hero-action.hero-action::before { display: none; }
+
+.hero-action.hero-blue   { --hero-a: #4F86E8; --hero-b: #2F62BF; --hero-c: #1B3C8C; box-shadow: 0 16px 36px rgba(47, 98, 191, .28); }
+.hero-action.hero-purple { --hero-a: #8A6BE0; --hero-b: #6448A8; --hero-c: #4A2F94; box-shadow: 0 16px 36px rgba(100, 72, 168, .28); }
+.hero-action.hero-gold   { --hero-a: #2B2E35; --hero-b: #1E2026; --hero-c: #17191D; box-shadow: 0 16px 36px rgba(23, 25, 29, .30); }
+
+.hero-action.hero-action .hero-action-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .18);
+  color: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25);
+}
+
+.hero-action.hero-gold .hero-action-icon { color: #F4C95D; }
+
+.hero-action.hero-action .hero-action-icon .icon { width: 26px; height: 26px; }
+
+.hero-action.hero-action .hero-action-label {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .20);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hero-action.hero-gold .hero-action-label { color: #F4C95D; background: rgba(244, 201, 93, .16); }
+
+.hero-action.hero-action .hero-action-title {
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.hero-action.hero-action .hero-action-text {
+  color: rgba(255, 255, 255, .86);
+  opacity: 1;
+}
+
+.hero-action.hero-action .hero-action-end {
+  flex-direction: row;
+  gap: 6px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.hero-action.hero-action .hero-action-cta {
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: #FFFFFF;
+  color: #B71F2D;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(23, 25, 29, .16);
+}
+
+.hero-action.hero-blue .hero-action-cta   { color: #1B3C8C; }
+.hero-action.hero-purple .hero-action-cta { color: #4A2F94; }
+.hero-action.hero-gold .hero-action-cta   { color: #17191D; }
+
+.hero-action-cta:empty { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-action.hero-action:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px rgba(217, 46, 61, .34);
+    border-color: transparent;
+  }
+}
+
+/* على الهاتف: العنوان يأخذ العرض والزر تحته بدل أن يضغط النص */
+@media (max-width: 520px) {
+  .hero-action.hero-action { flex-wrap: wrap; }
+  .hero-action.hero-action .hero-action-body { flex: 1 1 calc(100% - 70px); }
+  .hero-action.hero-action .hero-action-end {
+    flex: 1 0 100%;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-top: 2px;
+  }
+  .hero-action.hero-action .hero-action-cta { flex: 1; text-align: center; }
+  .hero-action.hero-action .hero-action-end .icon { display: none; }
+}
+
+/* تحية: التلويحة تتحرك مرة واحدة فقط عند الدخول */
+.home-greeting .icon-wave {
+  display: inline-block;
+  color: var(--color-yellow);
+  transform-origin: 70% 80%;
+  animation: hm-wave 1.5s ease-in-out .5s 1 both;
+}
+
+@keyframes hm-wave {
+  0%, 100% { transform: rotate(0); }
+  15%      { transform: rotate(14deg); }
+  30%      { transform: rotate(-8deg); }
+  45%      { transform: rotate(14deg); }
+  60%      { transform: rotate(-4deg); }
+  75%      { transform: rotate(10deg); }
+}
+
+/* ---------- 03 — الإحصاءات والقوائم ---------- */
+.home-stat {
+  border-radius: 18px;
+  border-top: 1px solid var(--color-border);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFAFA 100%);
+  box-shadow: var(--shadow-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-item,
+.home-progress-highlight,
+.home-today-row {
+  box-shadow: var(--shadow-soft);
+}
+
+.home-item {
+  transition:
+    transform .3s var(--ease-flow),
+    box-shadow .3s var(--ease-flow),
+    border-color .2s ease,
+    background-color .2s ease;
+}
+
+/* الحالة الفارغة تمتد على كل الأعمدة في عرض الحاسوب */
+.home-empty { grid-column: 1 / -1; }
+
+/* ---------- 04 — الضغط (لكل الأجهزة) ---------- */
+.hero-action:active,
+.home-item:active,
+.home-tools-panel .home-tools-item:active,
+.bottom-nav-item:active {
+  transform: scale(.97);
+  transition-duration: .12s;
+}
+
+.home-section-link:active { opacity: .7; }
+
+/* ---------- 05 — Hover: للأجهزة التي تدعمه فقط ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .hero-action::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, .20) 50%, rgba(255, 255, 255, 0) 65%);
+    transform: translateX(100%);
+    transition: transform .8s var(--ease-flow);
+  }
+
+  .hero-action:hover::after { transform: translateX(-100%); }
+
+  .home-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .home-section-link::after { transition: transform .3s var(--ease-flow); }
+  .home-section-link:hover::after { transform: translateX(-3px); }
+
+  /* الحركات المستمرة تعمل عند التمرير فقط بدل العمل الدائم */
+  .home-tools-item[href="ai.html"]:hover {
+    animation:
+      tool-rise .55s cubic-bezier(.2, .8, .2, 1) .2s both,
+      tool-shine 2.4s ease-in-out infinite;
+  }
+
+  .home-tools-item[href="events.html"]:hover::before {
+    animation: tool-float 3.2s ease-in-out infinite;
+  }
+}
+
+/* على اللمس: لا نترك حالة hover عالقة بعد الضغط، ولا حركة دائمة */
+@media (hover: none), (pointer: coarse) {
+  .home-tools-panel .home-tools-item:hover {
+    transform: translateZ(0);
+  }
+  .home-tools-panel .home-tools-item:hover::before { transform: rotate(-12deg); opacity: .16; }
+  .home-tools-panel .home-tools-item:hover::after { transform: none; }
+  .home-tools-item[href="bank.html"]:hover::before { opacity: .22; }
+  .home-tools-item[href="events.html"]::before { animation: none; }
+  .home-item:hover { transform: none; }
+}
+
+/* لمعة بطاقة «اسأل» تعمل مرة واحدة بعد التحميل بدل التكرار الدائم */
+.home-tools-item[href="ai.html"] {
+  animation:
+    tool-rise .55s cubic-bezier(.2, .8, .2, 1) .20s both,
+    tool-shine 1.8s ease-in-out 1.2s 1 both;
+}
+
+.home-tools-item[href="events.html"]::before { animation: none; }
+
+/* ---------- 06 — ظهور متدرّج عند التمرير ---------- */
+/* لا يُفعَّل إلا إذا نجح js/home-motion.js في التهيئة، فلا يختفي محتوى أبدًا */
+html.hm-js .hm-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+html.hm-js .hm-reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity .6s var(--ease-flow) var(--hm-delay, 0ms),
+    transform .7s var(--ease-flow) var(--hm-delay, 0ms);
+}
+
+/* ---------- 03b — التقدم ---------- */
+.home-progress-bar { height: 10px; background: #F3E6E8; }
+
+.home-progress-bar-fill {
+  background: linear-gradient(90deg, #4FAF83, #7FD1A8);
+  transition: width .9s var(--ease-flow) .2s;
+}
+
+.home-stat-value { font-size: 24px; font-weight: 800; }
+
+/* ---------- 07 — الحاسوب: تقليل الفراغ بتجاور الأقسام ---------- */
+@media (min-width: 900px) {
+  @supports selector(:has(a)) {
+    .home-content {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 32px;
+      align-items: start;
+    }
+
+    .home-content > .home-section { grid-column: 1 / -1; }
+    .home-content > .home-section:has(#statsRow) { grid-column: 1 / 8; }
+    .home-content > #todaySection { grid-column: 8 / -1; }
+    .home-content:has(#todaySection[style*="none"]) > .home-section:has(#statsRow) { grid-column: 1 / -1; }
+
+    /* الإعلانات والاختبارات جنبًا إلى جنب بدل عمودين متفاوتين */
+    .home-content > .home-section:has(.home-subsection) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 32px;
+    }
+    .home-content > .home-section:has(.home-subsection) > .home-section-head { grid-column: 1 / -1; }
+    #announcementsList,
+    #examsList { grid-template-columns: minmax(0, 1fr); }
+
+    .hero-action.hero-action { padding: 26px 30px; gap: 20px; }
+    .hero-action.hero-action .hero-action-title { font-size: 24px; }
+    .hero-action.hero-action .hero-action-text { font-size: 15px; }
+    .hero-action.hero-action .hero-action-cta { font-size: 14px; padding: 10px 24px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hm-js .hm-reveal,
+  html.hm-js .hm-reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .home-tools-item[href="ai.html"],
+  .home-tools-item[href="ai.html"]:hover { animation: none; }
+  .hero-action::after { display: none; }
+  .home-greeting .icon-wave { animation: none; }
+  .home-progress-bar-fill { transition: none; }
+  .hero-action:active,
+  .home-item:active,
+  .home-tools-panel .home-tools-item:active,
+  .bottom-nav-item:active { transform: none; }
+}
+
+/* الحالات الفارغة بوجود برعي: سطح فاتح بدون حد متقطع */
+.home-empty.mascot-empty,
+.home-today-empty.mascot-empty {
+  justify-content: flex-start;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #FFF8F8 0%, #FFFFFF 100%);
+  text-align: start;
+}
+
+.home-today-empty.mascot-empty .home-today-empty-text { margin-bottom: 6px; }
+
+/* مساحة لبرعي في الترويسة على الهاتف */
+@media (max-width: 700px) {
+  .home-welcome { padding-bottom: 34px; }
+}

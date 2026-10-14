@@ -1,0 +1,248 @@
+/* ============================================================
+   transition.css — بطاقة الانتقال الذكية (الروبوت)
+   ------------------------------------------------------------
+   تُستخدم مع js/page-transition.js. لا تعتمد على أي مورد خارجي.
+   الحركة بـ transform/opacity فقط (ما عدا انسياب الحد الملوّن
+   الذي يعمل أثناء ظهور البطاقة فقط).
+   ============================================================ */
+
+.pt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;                       /* فوق الشريط السفلي (200) والتنبيهات (2000) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    calc(var(--safe-top, 0px) + 16px)
+    calc(env(safe-area-inset-right, 0px) + 16px)
+    calc(var(--safe-bottom, 0px) + 16px)
+    calc(env(safe-area-inset-left, 0px) + 16px);
+  background: rgba(23, 25, 29, 0.40);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity .25s ease;
+  overscroll-behavior: contain;
+}
+
+.pt-overlay[hidden] { display: none; }
+.pt-overlay.is-open { opacity: 1; }
+
+.pt-card {
+  --pt-ease: cubic-bezier(.22, 1, .36, 1);
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 340px);
+  padding: 22px 20px 20px;
+  border-radius: 28px;
+  box-shadow: 0 28px 70px rgba(23, 25, 29, 0.28);
+  text-align: center;
+  color: var(--color-text, #17191D);
+  transform: translateY(18px) scale(.95);
+  opacity: 0;
+  transition: transform .5s var(--pt-ease), opacity .3s ease;
+  outline: none;
+}
+
+.pt-overlay.is-open .pt-card {
+  transform: none;
+  opacity: 1;
+}
+
+/* حد ملوّن ينساب ببطء — "كريمة" هادئة حول البطاقة */
+.pt-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -2px;
+  border-radius: 30px;
+  background: linear-gradient(115deg, #FF4654, #FFB7BE, #E8B94F, #FF8B97, #FF4654);
+  background-size: 320% 100%;
+  animation: pt-flow 3.6s linear infinite;
+}
+
+/* سطح البطاقة الأبيض فوق الحد الملوّن (الخلفية لا تُرسم فوق ::before ذي z-index سالب) */
+.pt-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 28px;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #FFF0F1 0%, rgba(255, 240, 241, 0) 70%),
+    #FFFFFF;
+}
+
+@keyframes pt-flow {
+  from { background-position: 0% 0; }
+  to   { background-position: -320% 0; }
+}
+
+/* ---------- الروبوت ---------- */
+
+.pt-robot {
+  display: block;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 4px;
+  overflow: visible;
+}
+
+/* حالة الخطأ: يتوقف التلويح وتتغير الابتسامة */
+.pt-card.is-error .pt-robot .rb-wave { animation: none; transform: rotate(-12deg); }
+.pt-card.is-error .pt-robot .rb-smile { display: none; }
+.pt-card.is-error .pt-robot .rb-flat { display: block; }
+.pt-card.is-error::before { background: linear-gradient(115deg, #D92E3D, #FF8B97); animation: none; }
+
+/* ---------- النص ---------- */
+
+.pt-chip {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 0 8px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #FFF0F1;
+  color: #B71F2D;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.pt-msg {
+  margin: 0;
+  min-height: 3.4em;                    /* يمنع قفز البطاقة عند تغيّر الرسالة */
+  font-family: var(--font-display, inherit);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: #17191D;
+}
+
+.pt-w {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: pt-word .5s cubic-bezier(.22, 1, .36, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 45ms + 120ms);
+}
+
+@keyframes pt-word {
+  to { opacity: 1; transform: none; }
+}
+
+.pt-status {
+  margin: 10px 0 0;
+  min-height: 1.5em;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #68666A;
+}
+
+.pt-status.is-swap { animation: pt-fade .4s ease both; }
+
+@keyframes pt-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* شريط التقدم الغير محدد */
+.pt-bar {
+  position: relative;
+  height: 4px;
+  margin: 14px 4px 0;
+  border-radius: 999px;
+  background: #F3E6E8;
+  overflow: hidden;
+  direction: ltr;
+}
+
+.pt-bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 38%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #FF4654, #FF8B97);
+  animation: pt-bar 1.3s cubic-bezier(.45, .05, .35, 1) infinite;
+}
+
+@keyframes pt-bar {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(270%); }
+}
+
+.pt-card.is-error .pt-bar { display: none; }
+
+/* ---------- أزرار الخطأ ---------- */
+
+.pt-actions {
+  display: none;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pt-card.is-error .pt-actions { display: flex; }
+
+.pt-btn {
+  flex: 1;
+  min-height: var(--touch-min, 44px);
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1.5px solid #CFC7C9;
+  background: #FFFFFF;
+  color: #17191D;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .2s cubic-bezier(.22, 1, .36, 1), background-color .2s ease;
+}
+
+.pt-btn:active { transform: scale(.96); }
+
+.pt-btn-primary {
+  border-color: #B71F2D;
+  background: #B71F2D;
+  color: #FFFFFF;
+}
+
+.pt-btn:focus-visible {
+  outline: 3px solid rgba(255, 70, 84, .55);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pt-btn:hover { background: #FFF0F1; }
+  .pt-btn-primary:hover { background: #9A1824; }
+}
+
+/* نص لقارئات الشاشة فقط */
+.pt-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* منع تمرير الصفحة خلف البطاقة */
+html.pt-lock,
+html.pt-lock body { overflow: hidden; }
+
+/* ---------- تقليل الحركة ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pt-overlay,
+  .pt-card { transition: opacity .15s linear; transform: none; }
+  .pt-card::before,
+  .pt-bar > span { animation: none; }
+  .pt-bar > span { width: 60%; }
+  .pt-w { animation: none; opacity: 1; transform: none; }
+  .pt-status.is-swap { animation: none; }
+}

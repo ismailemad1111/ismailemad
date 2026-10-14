@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="description" content="لوحة التحكم — منصة أ/ إسماعيل عماد" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>لوحة التحكم — منصة أ/ إسماعيل عماد</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Project Styles -->
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+
+  <style>
+    /* =========================================================
+       ADMIN PAGE BASE
+       ========================================================= */
+    .adm-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--color-surface-soft);
+      padding-bottom: calc(var(--safe-bottom) + 90px);
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    .adm-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: calc(var(--safe-top) + 14px) 16px 14px;
+      background: var(--color-dark-section);
+      color: #FFFFFF;
+    }
+
+    .adm-header-inner {
+      max-width: 900px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .adm-header-brand {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .adm-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(122, 79, 224, 0.25);
+      color: var(--color-yellow);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .adm-header-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .adm-header-sub {
+      margin: 3px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .adm-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .adm-header-btn {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.15s ease;
+    }
+
+    .adm-header-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .adm-header-btn.is-danger:hover {
+      background: rgba(224, 58, 47, 0.2);
+      border-color: rgba(224, 58, 47, 0.35);
+    }
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
+    .adm-content {
+      max-width: 900px;
+      margin-inline: auto;
+      padding: 16px;
+    }
+
+    .adm-section {
+      margin-bottom: 20px;
+    }
+
+    .adm-section-title {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .adm-section-title-icon {
+      font-size: 16px;
+    }
+
+    /* =========================================================
+       WELCOME CARD
+       ========================================================= */
+    .adm-welcome {
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .adm-welcome::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      inset-inline-end: -30px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(122, 79, 224, 0.12);
+      pointer-events: none;
+    }
+
+    .adm-welcome-greeting {
+      margin: 0 0 6px;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+
+    .adm-welcome-date {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================================================
+       STATS GRID
+       ========================================================= */
+    .adm-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .adm-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 14px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    .adm-stat:hover {
+      transform: translateY(-2px);
+      border-color: rgba(122, 79, 224, 0.35);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .adm-stat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .adm-stat-icon {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 18px;
+    }
+
+    .adm-stat-icon--green  { background: var(--color-green-light); }
+    .adm-stat-icon--blue   { background: var(--color-blue-light); }
+    .adm-stat-icon--yellow { background: var(--color-yellow-light); }
+    .adm-stat-icon--purple { background: var(--color-purple-light); }
+    .adm-stat-icon--red    { background: var(--color-red-light); }
+    .adm-stat-icon--orange { background: var(--color-orange-light); }
+
+    .adm-stat-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--color-red);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .adm-stat-value {
+      font-family: "Inter", sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--color-text);
+      direction: ltr;
+      line-height: 1.1;
+    }
+
+    .adm-stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       QUICK ACTIONS
+       ========================================================= */
+    .adm-quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .adm-quick {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      text-decoration: none;
+      color: var(--color-text);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .adm-quick:hover {
+      transform: translateY(-2px);
+      border-color: rgba(122, 79, 224, 0.4);
+    }
+
+    .adm-quick-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 20px;
+      background: var(--color-surface-soft);
+    }
+
+    .adm-quick-icon--green  { background: var(--color-green-light); }
+    .adm-quick-icon--blue   { background: var(--color-blue-light); }
+    .adm-quick-icon--yellow { background: var(--color-yellow-light); }
+    .adm-quick-icon--purple { background: var(--color-purple-light); }
+    .adm-quick-icon--red    { background: var(--color-red-light); }
+    .adm-quick-icon--orange { background: var(--color-orange-light); }
+
+    .adm-quick-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .adm-quick-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.3;
+    }
+
+    .adm-quick-sub {
+      margin: 2px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       SKELETON
+       ========================================================= */
+    .adm-skeleton {
+      border-radius: 16px;
+      background: linear-gradient(
+        90deg,
+        var(--color-border) 25%,
+        var(--color-border) 50%,
+        var(--color-border) 75%
+      );
+      background-size: 200% 100%;
+      animation: adm-shimmer 1.4s ease-in-out infinite;
+    }
+
+    .adm-skeleton-stat {
+      height: 104px;
+    }
+
+    @keyframes adm-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* =========================================================
+       BOTTOM NAV (Admin)
+       ========================================================= */
+    .adm-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      inset-inline: 0;
+      z-index: 60;
+      display: flex;
+      align-items: stretch;
+      height: 72px;
+      padding-bottom: var(--safe-bottom);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .adm-bottom-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .adm-nav-item {
+      flex: 1 0 auto;
+      min-width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 6px;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .adm-nav-item:hover {
+      color: var(--color-text);
+    }
+
+    .adm-nav-item.is-active {
+      color: var(--color-purple-dark);
+    }
+
+    .adm-nav-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (min-width: 600px) {
+      .adm-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .adm-quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .adm-stats-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .adm-quick-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .adm-stat,
+      .adm-quick {
+        transition: none;
+      }
+      .adm-skeleton {
+        animation: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+
+<body>
+
+  <div class="adm-page">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="adm-header">
+      <div class="adm-header-inner">
+
+        <div class="adm-header-brand">
+          <span class="adm-header-badge">
+            <span aria-hidden="true"><span class="icon icon-lock" aria-hidden="true"></span></span>
+            <span>Admin</span>
+          </span>
+          <h1 class="adm-header-title">لوحة التحكم</h1>
+          <p class="adm-header-sub" id="admHeaderSub">منصة أ/ إسماعيل عماد</p>
+        </div>
+
+        <div class="adm-header-actions">
+          <a
+            href="../index.html"
+            class="adm-header-btn"
+            title="عرض المنصة"
+            aria-label="عرض المنصة"
+          >
+            <span class="icon icon-globe" aria-hidden="true"></span>
+          </a>
+          <button
+            type="button"
+            class="adm-header-btn is-danger"
+            id="admLogoutBtn"
+            title="تسجيل الخروج"
+            aria-label="تسجيل الخروج"
+          >
+            <span class="icon icon-logout" aria-hidden="true"></span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ============================================================
+         CONTENT
+         ============================================================ -->
+    <main class="adm-content">
+
+      <!-- ==============================================
+           WELCOME
+           ============================================== -->
+      <section class="adm-section">
+        <div class="adm-welcome">
+          <h2 class="adm-welcome-greeting" id="admGreeting">مرحبًا بك <span class="icon icon-wave" aria-hidden="true"></span></h2>
+          <p class="adm-welcome-date" id="admDate">—</p>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           STATS
+           ============================================== -->
+      <section class="adm-section">
+        <h3 class="adm-section-title">
+          <span class="adm-section-title-icon" aria-hidden="true"><span class="icon icon-chart-bar" aria-hidden="true"></span></span>
+          <span>نظرة عامة</span>
+        </h3>
+
+        <!-- Skeleton -->
+        <div class="adm-stats-grid" id="admStatsSkeleton">
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+          <div class="adm-skeleton adm-skeleton-stat"></div>
+        </div>
+
+        <!-- Real Stats -->
+        <div class="adm-stats-grid" id="admStatsGrid" style="display: none;">
+
+          <a href="students.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--green" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></div>
+            </div>
+            <div class="adm-stat-value" id="admStatStudents">0</div>
+            <div class="adm-stat-label">طالب</div>
+          </a>
+
+          <a href="codes.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--blue" aria-hidden="true"><span class="icon icon-key" aria-hidden="true"></span></div>
+            </div>
+            <div class="adm-stat-value" id="admStatCodes">0</div>
+            <div class="adm-stat-label">كود</div>
+          </a>
+
+          <a href="requests.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--yellow" aria-hidden="true"><span class="icon icon-mail-in" aria-hidden="true"></span></div>
+              <span class="adm-stat-badge" id="admStatRequestsBadge" style="display: none;">0</span>
+            </div>
+            <div class="adm-stat-value" id="admStatRequests">0</div>
+            <div class="adm-stat-label">طلب اشتراك</div>
+          </a>
+
+          <a href="announcements.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--orange" aria-hidden="true"><span class="icon icon-announcement" aria-hidden="true"></span></div>
+            </div>
+            <div class="adm-stat-value" id="admStatAnnouncements">0</div>
+            <div class="adm-stat-label">إعلان</div>
+          </a>
+
+          <a href="exams.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--purple" aria-hidden="true"><span class="icon icon-exam-paper" aria-hidden="true"></span></div>
+            </div>
+            <div class="adm-stat-value" id="admStatExams">0</div>
+            <div class="adm-stat-label">اختبار</div>
+          </a>
+
+          <a href="results.html" class="adm-stat">
+            <div class="adm-stat-head">
+              <div class="adm-stat-icon adm-stat-icon--red" aria-hidden="true"><span class="icon icon-target" aria-hidden="true"></span></div>
+            </div>
+            <div class="adm-stat-value" id="admStatResults">0</div>
+            <div class="adm-stat-label">محاولة اختبار</div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ==============================================
+           QUICK ACTIONS
+           ============================================== -->
+      <section class="adm-section">
+        <h3 class="adm-section-title">
+          <span class="adm-section-title-icon" aria-hidden="true"><span class="icon icon-bolt" aria-hidden="true"></span></span>
+          <span>وصول سريع</span>
+        </h3>
+
+        <div class="adm-quick-grid">
+
+          <a href="students.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--green" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الطلاب</h4>
+              <p class="adm-quick-sub">إدارة الطلاب</p>
+            </div>
+          </a>
+
+          <a href="codes.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--blue" aria-hidden="true"><span class="icon icon-key" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الأكواد</h4>
+              <p class="adm-quick-sub">إنشاء وإدارة</p>
+            </div>
+          </a>
+
+          <a href="requests.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--yellow" aria-hidden="true"><span class="icon icon-mail-in" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الطلبات</h4>
+              <p class="adm-quick-sub">طلبات الاشتراك</p>
+            </div>
+          </a>
+
+          <a href="announcements.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--orange" aria-hidden="true"><span class="icon icon-announcement" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الإعلانات</h4>
+              <p class="adm-quick-sub">إنشاء وإدارة</p>
+            </div>
+          </a>
+
+          <a href="lessons.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--blue" aria-hidden="true"><span class="icon icon-video" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الدروس</h4>
+              <p class="adm-quick-sub">فيديو + صوت</p>
+            </div>
+          </a>
+
+          <a href="exams.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--purple" aria-hidden="true"><span class="icon icon-exam-paper" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الاختبارات</h4>
+              <p class="adm-quick-sub">إنشاء وإدارة</p>
+            </div>
+          </a>
+
+          <a href="results.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--red" aria-hidden="true"><span class="icon icon-target" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">النتائج</h4>
+              <p class="adm-quick-sub">متابعة النتائج</p>
+            </div>
+          </a>
+
+          <a href="bank.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--yellow" aria-hidden="true"><span class="icon icon-trophy" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">بنك مستر إسماعيل</h4>
+              <p class="adm-quick-sub">الجوائز والأرصدة والطلبات</p>
+            </div>
+          </a>
+
+          <a href="events.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--purple" aria-hidden="true"><span class="icon icon-rocket" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الأحداث والألعاب</h4>
+              <p class="adm-quick-sub">إدارة الأحداث والمشاركات والنتائج</p>
+            </div>
+          </a>
+
+          <a href="statistics.html" class="adm-quick">
+            <div class="adm-quick-icon adm-quick-icon--green" aria-hidden="true"><span class="icon icon-chart-line" aria-hidden="true"></span></div>
+            <div class="adm-quick-body">
+              <h4 class="adm-quick-title">الإحصائيات</h4>
+              <p class="adm-quick-sub">تحليلات</p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ============================================================
+         BOTTOM NAV (Admin) — 6 عناصر أساسية
+         ============================================================ -->
+    <nav class="adm-bottom-nav" aria-label="التنقل الإداري">
+
+      <a href="index.html" class="adm-nav-item is-active">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-home" aria-hidden="true"></span></span>
+        <span>الرئيسية</span>
+      </a>
+
+      <a href="students.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></span>
+        <span>الطلاب</span>
+      </a>
+
+      <a href="codes.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-key" aria-hidden="true"></span></span>
+        <span>الأكواد</span>
+      </a>
+
+      <a href="announcements.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-announcement" aria-hidden="true"></span></span>
+        <span>إعلانات</span>
+      </a>
+
+      <a href="exams.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-exam-paper" aria-hidden="true"></span></span>
+        <span>اختبارات</span>
+      </a>
+
+      <a href="settings.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-settings" aria-hidden="true"></span></span>
+        <span>الإعدادات</span>
+      </a>
+
+    </nav>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script type="module" src="../js/admin-dashboard.js"></script>
+
+</body>
+</html>

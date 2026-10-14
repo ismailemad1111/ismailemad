@@ -1,0 +1,79 @@
+/* Editorial Learning visual layer. Functional markup and application behavior remain untouched. */
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@500;600;700;800&display=swap');
+:root { --paper-grid: none; --paper-ruled: none; }
+html { scroll-behavior: smooth; }
+body { background: #fff; color: #17191D; font-family: var(--font-arabic); }
+h1,h2,h3,h4,.home-greeting,.home-section-title { font-family: var(--font-display); letter-spacing: -.035em; }
+::selection { background: #FF4654; color: #fff; }
+a,button,[role="button"],input,select,textarea { transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast); }
+:focus-visible { outline: 3px solid rgba(255,70,84,.55) !important; outline-offset: 3px; }
+/* Remove the previous stationery/grid identity globally. */
+body, main, section, .home-page, .home-welcome, .home-content, .page, .content, .adm-page { background-image: none; }
+.home-page { padding-bottom: calc(var(--safe-bottom) + 88px); background: #fff; }
+.home-welcome { padding: clamp(28px,5vw,64px) 24px 30px; background: linear-gradient(135deg,#FFF0F1 0%,#fff 75%); }
+.home-welcome-inner,.home-content { width: min(100%, 1240px); max-width: 1240px; margin-inline: auto; }
+.home-greeting { font-size: clamp(28px,4vw,48px); font-weight: 700; color: #17191D; line-height: 1.25; }
+.home-greeting-name { color: #FF4654; }
+.home-welcome-context { font-size: 16px; line-height: 1.8; color: #68666A; }
+.home-welcome-date { font-weight: 500; color: #68666A; }
+.home-content { padding: 16px 24px 56px; }
+.home-section { margin-bottom: clamp(32px,5vw,64px); }
+.home-section-head { margin-bottom: 20px; align-items: end; }
+.home-section-title { font-size: clamp(22px,2.5vw,32px); font-weight: 700; }
+.home-section-link { color: #D92E3D; }
+.hero-action { border: 1px solid #E7E3E4; border-radius: 16px; background: #fff; box-shadow: none; padding: 22px; gap: 18px; }
+.hero-action::before { width: 4px; background: #FF4654; }
+.hero-action:hover { transform: translateY(-2px); border-color: #FFB7BE; box-shadow: var(--shadow-card); }
+.hero-action-icon { background: #FFF0F1; color: #D92E3D; border-radius: 12px; }
+.hero-action-label { color: #D92E3D; }
+.hero-action-title { color: #17191D; font-size: 19px; }
+.hero-action-text { color: #68666A; line-height: 1.75; }
+.home-stats > *, .home-tools-item, .home-tools-panel > * { border-radius: 14px; box-shadow: none; }
+.home-tools-item { min-height: 72px; border: 1px solid #E7E3E4; background: #fff; }
+.home-tools-item:hover { border-color: #FF8B97; background: #FFF0F1; }
+/* Shared application surfaces */
+[class*="-content"], .adm-content, .ex-content, .pf-content, .ann-content, .ls-content, .pl-content, .ai-content { max-width: 1240px; }
+[class*="-header"], .adm-header-inner, .ex-header-inner, .pf-header-inner, .ann-header-inner, .ls-header-inner, .pl-header-inner { max-width: 1240px; }
+.card,.panel,.surface,.stat-card,.resource-card,.lesson-card,.exam-card,.announcement-card,.profile-card,.planner-card,.ai-message,.adm-panel,.adm-stat-card { border: 1px solid #E7E3E4; border-radius: 16px; box-shadow: none; }
+button,.btn,.button,.primary-button,[class*="btn-primary"] { border-radius: 10px; font-weight: 600; }
+button:hover,.btn:hover,.button:hover { filter: brightness(.98); }
+button:disabled,.btn:disabled { cursor: not-allowed; opacity: .55; }
+input,select,textarea { border-radius: 10px; border-color: #D8D2D4; background-color: #fff; min-height: 44px; }
+input:focus,select:focus,textarea:focus { border-color: #FF4654; box-shadow: 0 0 0 3px rgba(255,70,84,.12); }
+/* Navigation */
+header:not(.home-welcome) { border-color: #EEE9EA; }
+.bottom-nav,.mobile-nav { background: rgba(255,255,255,.97); border-color: #E7E3E4; backdrop-filter: blur(12px); }
+/* Admin: dense, data-first, deliberately distinct from student home */
+.adm-page,.admin-page { background: #F7F6F6; }
+.adm-header,.adm-sidebar { background: #17191D; color: #fff; }
+.adm-content { padding-bottom: 48px; }
+.adm-panel,.adm-stat,.adm-stat-card { background: #fff; border-color: #E5E0E1; }
+.adm-stat-value,.adm-page h1,.adm-page h2 { color: #17191D; }
+.badge,.status-badge { border-radius: 6px; }
+/* Login and onboarding get a restrained signature wash, not repeated gradients. */
+.login-page,.setup-page,.subscribe-page { background: linear-gradient(135deg,#FF4654 0%,#FF8B97 32%,#FFF0F1 62%,#fff 100%); }
+.login-card,.setup-card,.subscribe-card { border: 1px solid rgba(255,255,255,.72); border-radius: 20px; box-shadow: 0 18px 54px rgba(23,25,29,.10); }
+/* Schedule and tables remain readable on narrow screens. */
+table { border-collapse: separate; border-spacing: 0; }
+th { background: #F7F5F5; color: #17191D; font-weight: 600; }
+th,td { border-color: #E7E3E4; }
+@media (min-width: 900px) {
+ .home-welcome { padding-inline: 32px; }
+ .home-content { padding-inline: 32px; }
+ .home-section { margin-bottom: 64px; }
+ .ex-list,.ann-list,.ls-list { gap: 20px; }
+}
+@media (max-width: 700px) {
+ .home-welcome { padding: calc(var(--safe-top) + 28px) 18px 24px; }
+ .home-welcome-inner { padding-inline-start: 0; }
+ .home-content { padding: 12px 18px 36px; }
+ .home-welcome-top { align-items: start; flex-wrap: wrap; }
+ .home-greeting { font-size: clamp(26px,7vw,34px); }
+ .home-section-title { font-size: 23px; }
+ .hero-action { padding: 16px; gap: 12px; }
+ .home-stats { gap: 10px; }
+ .ex-list,.ann-list,.ls-list { grid-template-columns: minmax(0,1fr); }
+ table { min-width: 600px; }
+ .table-wrap,.table-responsive,[class*="table-scroll"] { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

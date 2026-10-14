@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="description" content="لوحة التحكم — منصة أ/ إسماعيل عماد" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>لوحة التحكم — منصة أ/ إسماعيل عماد</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Project Styles -->
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+
+  <style>
+    /* =========================================================
+       ADMIN LOGIN PAGE
+       خلفية داكنة - لأنها لوحة تحكم
+       ========================================================= */
+    .admin-login-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding:
+        calc(var(--safe-top) + 24px)
+        16px
+        calc(var(--safe-bottom) + 24px);
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(122, 79, 224, 0.10),
+          transparent 50%
+        ),
+        var(--color-dark-section);
+      overflow-y: auto;
+    }
+
+    /* =========================================================
+       CARD
+       ========================================================= */
+    .admin-login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--color-surface);
+      border-radius: 22px;
+      padding: 28px 24px;
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* شريط بنفسجي علوي */
+    .admin-login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      inset-inline-start: 32px;
+      inset-inline-end: 32px;
+      height: 4px;
+      border-radius: 0 0 8px 8px;
+      background: linear-gradient(90deg, var(--color-purple) 0%, var(--color-purple-dark) 100%);
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    .admin-login-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 24px;
+      padding-top: 6px;
+    }
+
+    .admin-login-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--color-purple-light);
+      color: var(--color-purple-dark);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .admin-login-icon {
+      width: 68px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      background: var(--color-purple);
+      font-size: 30px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 26px rgba(122, 79, 224, 0.28);
+    }
+
+    .admin-login-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--color-text);
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+    }
+
+    .admin-login-sub {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       FORM
+       ========================================================= */
+    .admin-login-form .form-group {
+      margin-bottom: 16px;
+    }
+
+    .admin-login-form .form-label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .admin-login-form .form-input {
+      width: 100%;
+      min-height: 50px;
+      padding: 0 15px;
+      border-radius: 12px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg);
+      font-family: var(--font-arabic);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .admin-login-form .form-input::placeholder {
+      color: var(--color-text-muted);
+      opacity: 0.7;
+    }
+
+    .admin-login-form .form-input:focus {
+      outline: none;
+      border-color: var(--color-purple);
+      box-shadow: 0 0 0 4px rgba(122, 79, 224, 0.12);
+    }
+
+    .admin-login-form .form-input.is-error {
+      border-color: var(--color-red);
+    }
+
+    /* =========================================================
+       SUBMIT BUTTON
+       ========================================================= */
+    .admin-submit-btn {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 6px;
+      border-radius: 12px;
+      background: var(--color-purple);
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-arabic);
+      font-size: 15px;
+      font-weight: 800;
+      box-shadow: 0 4px 0 var(--color-purple-dark);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.15s ease;
+      position: relative;
+    }
+
+    .admin-submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 0 var(--color-purple-dark);
+    }
+
+    .admin-submit-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 var(--color-purple-dark);
+    }
+
+    .admin-submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .admin-submit-btn.is-loading {
+      color: transparent;
+    }
+
+    .admin-submit-btn.is-loading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #FFFFFF;
+      border-radius: 50%;
+      animation: admin-spin 0.8s linear infinite;
+    }
+
+    @keyframes admin-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    .admin-login-footer {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+
+    .admin-login-footer-icon {
+      display: inline-block;
+      margin-inline-end: 4px;
+    }
+
+    /* =========================================================
+       BACK TO STUDENT LOGIN
+       ========================================================= */
+    .admin-back-link {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .admin-back-link:hover {
+      color: #FFFFFF;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 480px) {
+      .admin-login-card {
+        padding: 24px 18px;
+        border-radius: 20px;
+      }
+
+      .admin-login-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        font-size: 26px;
+      }
+
+      .admin-login-title {
+        font-size: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .admin-submit-btn,
+      .admin-login-form .form-input,
+      .admin-back-link {
+        transition: none;
+      }
+      .admin-submit-btn.is-loading::after {
+        animation: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+
+<body>
+
+  <main class="admin-login-page">
+
+    <!-- ============================================================
+         LOGIN CARD
+         ============================================================ -->
+    <div class="admin-login-card">
+
+      <!-- Header -->
+      <div class="admin-login-header">
+
+        <span class="admin-login-badge">
+          <span aria-hidden="true"><span class="icon icon-lock" aria-hidden="true"></span></span>
+          <span>Admin</span>
+        </span>
+
+        <div class="admin-login-icon" aria-hidden="true"><span class="icon icon-settings" aria-hidden="true"></span></div>
+
+        <h1 class="admin-login-title">لوحة التحكم</h1>
+        <p class="admin-login-sub">
+          دخول الإدارة — منصة أ/ إسماعيل عماد
+        </p>
+
+      </div>
+
+      <!-- Form -->
+      <form
+        class="admin-login-form"
+        id="adminLoginForm"
+        method="post"
+        autocomplete="off"
+        novalidate
+      >
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="adminEmail">
+            البريد الإلكتروني
+          </label>
+          <input
+            type="email"
+            id="adminEmail"
+            name="email"
+            class="form-input"
+            placeholder="admin@example.com"
+            autocomplete="username"
+            inputmode="email"
+            dir="ltr"
+            spellcheck="false"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="adminPassword">
+            كلمة المرور
+          </label>
+          <input
+            type="password"
+            id="adminPassword"
+            name="password"
+            class="form-input"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            dir="ltr"
+            required
+          />
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="admin-submit-btn"
+          id="adminSubmitBtn"
+        >
+          تسجيل الدخول
+        </button>
+
+      </form>
+
+      <!-- Footer -->
+      <div class="admin-login-footer">
+        <span class="admin-login-footer-icon" aria-hidden="true"><span class="icon icon-warning" aria-hidden="true"></span></span>
+        هذه الصفحة مخصصة للإدارة فقط.
+      </div>
+
+    </div>
+
+    <!-- Back to student login -->
+    <a href="../login.html" class="admin-back-link">
+      <span aria-hidden="true"><span class="icon icon-arrow-back" aria-hidden="true"></span></span>
+      <span>العودة لتسجيل دخول الطالب</span>
+    </a>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script type="module" src="../js/admin-login.js"></script>
+
+</body>
+</html>

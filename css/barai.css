@@ -1,0 +1,93 @@
+/* ============================================================
+   barai.css — فقاعة برعي ولحظاته. transform/opacity فقط.
+   مثبّتة أسفل اليسار فوق الشريط السفلي (76px) والمساحة الآمنة.
+   ============================================================ */
+.barai-bubble {
+  position: fixed;
+  left: 12px;
+  bottom: calc(76px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)) + 12px + var(--barai-kb, 0px) + var(--barai-raise, 0px));
+  z-index: 1500;                       /* فوق الشريط (200) وتحت التنبيهات (2000) وبطاقة الانتقال (2100) */
+  display: flex; flex-direction: row; align-items: flex-end; gap: 4px;
+  direction: ltr;
+  max-width: min(340px, calc(100vw - 24px));
+  pointer-events: none;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .25s ease, transform .3s cubic-bezier(.22, 1, .36, 1);
+}
+.barai-bubble.is-in { opacity: 1; transform: none; }
+.barai-bubble.no-nav { bottom: calc(var(--safe-bottom, env(safe-area-inset-bottom, 0px)) + 16px + var(--barai-kb, 0px) + var(--barai-raise, 0px)); }
+/* أعلى الشاشة حين لا يتّسع المكان فوق العنصر الذي يجب تجنّبه */
+.barai-bubble.is-top, .barai-bubble.no-nav.is-top { bottom: auto; }
+.barai-bubble .mascot { width: 56px; height: 56px; flex: 0 0 auto; margin-bottom: -4px; }
+.barai-card {
+  position: relative; direction: rtl; text-align: right; pointer-events: auto;
+  background: #fff; color: #17191D;
+  border: 2px solid #17191D; border-radius: 16px 16px 16px 4px;
+  padding: 10px 34px 10px 12px;
+  font-size: 14px; line-height: 1.6; font-weight: 600;
+  box-shadow: 0 6px 18px rgba(23, 25, 29, .16);
+}
+.barai-text { margin: 0; }
+.barai-close {
+  position: absolute; top: 2px; right: 2px; width: 32px; height: 32px;
+  display: grid; place-items: center; border: 0; background: transparent; color: #454349;
+  font-size: 20px; line-height: 1; border-radius: 50%; cursor: pointer;
+}
+.barai-close:focus-visible, .barai-action:focus-visible { outline: 3px solid #17191D; outline-offset: 2px; }
+.barai-action {
+  display: inline-flex; align-items: center; min-height: 36px; margin-top: 8px; padding: 0 14px;
+  border-radius: 999px; background: #B91C2C; color: #fff; font-weight: 700; font-size: 13px;
+  text-decoration: none; border: 0; cursor: pointer;
+}
+
+.barai-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.barai-actions .barai-action { margin-top: 0; }
+.barai-action.is-secondary { background: #fff; color: #8F1420; border: 2px solid #B91C2C; }
+
+/* ذيل الفقاعة يشير إلى برعي */
+.barai-bubble .barai-card::after {
+  content: ""; position: absolute; left: -7px; bottom: 16px; width: 12px; height: 12px;
+  background: #fff; border-left: 2px solid #17191D; border-bottom: 2px solid #17191D;
+  transform: rotate(45deg);
+}
+
+/* لحظة كاملة */
+.barai-moment {
+  position: fixed; inset-inline: 0; bottom: calc(76px + var(--safe-bottom, env(safe-area-inset-bottom, 0px)) + 16px);
+  z-index: 1500; display: flex; justify-content: center; pointer-events: none;
+  opacity: 0; transform: translateY(24px) scale(.96);
+  transition: opacity .3s ease, transform .4s cubic-bezier(.22, 1, .36, 1);
+}
+.barai-moment.is-in { opacity: 1; transform: none; }
+.barai-moment .barai-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  border-radius: 20px; padding: 12px 36px 14px; max-width: min(320px, calc(100vw - 24px));
+}
+.barai-moment .mascot { width: 128px; height: 128px; }
+
+/* مدمج في الصفحة */
+.barai-inline { display: flex; align-items: center; gap: 12px; }
+.barai-inline .mascot { width: 72px; height: 72px; flex: 0 0 auto; }
+.barai-inline.is-xs .mascot { width: 40px; height: 40px; }
+.barai-inline-text { margin: 0; flex: 1; min-width: 0; font-weight: 600; }
+
+/* اختيار مستوى برعي في الملف الشخصي */
+.barai-pref { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.barai-pref .mascot { width: 56px; height: 56px; }
+.barai-pref-seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.barai-pref-btn {
+  min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid #17191D; background: #fff;
+  font: inherit; font-weight: 700; cursor: pointer;
+}
+.barai-pref-btn[aria-pressed="true"] { background: #B91C2C; border-color: #B91C2C; color: #fff; }
+
+/* برعي الهادئ (بلا نص) داخل مربع أيقونة الترويسة */
+.barai-ambient-on { overflow: visible; }
+.barai-ambient-on > .mascot { width: 100%; height: 100%; }
+.barai-ambient-on > .icon { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .barai-bubble, .barai-moment { transition: opacity .15s linear; transform: none; }
+}
+
+.barai-result-line { margin: 8px auto 0; max-width: 28em; text-align: center; font-weight: 700; font-size: 15px; line-height: 1.6; }

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="description" content="إدارة الدروس — منصة أ/ إسماعيل عماد" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>الدروس — لوحة التحكم</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Project Styles -->
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+
+  <style>
+    /* =========================================================
+       PAGE BASE
+       ========================================================= */
+    .adm-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--color-surface-soft);
+      padding-bottom: calc(var(--safe-bottom) + 90px);
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    .adm-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: calc(var(--safe-top) + 14px) 16px 14px;
+      background: var(--color-dark-section);
+      color: #FFFFFF;
+    }
+
+    .adm-header-inner {
+      max-width: 900px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .adm-back-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.15s ease;
+    }
+    .adm-back-btn:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .adm-header-brand { flex: 1; min-width: 0; }
+
+    .adm-header-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .adm-header-sub {
+      margin: 3px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .adm-header-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.15s ease;
+    }
+    .adm-header-btn:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .adm-header-btn--primary {
+      background: var(--color-blue);
+      border-color: transparent;
+    }
+    .adm-header-btn--primary:hover {
+      background: var(--color-blue);
+    }
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
+    .adm-content {
+      max-width: 900px;
+      margin-inline: auto;
+      padding: 16px;
+    }
+
+    /* =========================================================
+       STATS
+       ========================================================= */
+    .ls-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .ls-stat {
+      padding: 12px 10px;
+      border-radius: 14px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .ls-stat:hover {
+      border-color: rgba(28, 123, 196, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .ls-stat.is-active {
+      border-color: var(--color-blue);
+      background: var(--color-blue-light);
+    }
+
+    .ls-stat-value {
+      font-family: "Inter", sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--color-text);
+      direction: ltr;
+      line-height: 1.2;
+    }
+
+    .ls-stat-value.is-blue   { color: var(--color-blue); }
+    .ls-stat-value.is-green  { color: var(--color-green); }
+
+    .ls-stat-label {
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+
+    /* =========================================================
+       TOOLBAR
+       ========================================================= */
+    .ls-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .ls-search {
+      position: relative;
+    }
+
+    .ls-search input {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 42px 0 14px;
+      border-radius: 14px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      font-family: var(--font-arabic);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .ls-search input::placeholder {
+      color: var(--color-text-muted);
+      opacity: 0.7;
+    }
+
+    .ls-search input:focus {
+      outline: none;
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(28, 123, 196, 0.12);
+    }
+
+    .ls-search-icon {
+      position: absolute;
+      top: 50%;
+      inset-inline-start: 14px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--color-text-muted);
+      pointer-events: none;
+    }
+
+    .ls-filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .ls-filters::-webkit-scrollbar { display: none; }
+
+    .ls-filter {
+      flex-shrink: 0;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      font-family: var(--font-arabic);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .ls-filter:hover {
+      border-color: rgba(28, 123, 196, 0.35);
+      color: var(--color-text);
+    }
+
+    .ls-filter.is-active {
+      background: var(--color-blue);
+      border-color: var(--color-blue);
+      color: #FFFFFF;
+    }
+
+    /* =========================================================
+       LIST
+       ========================================================= */
+    .ls-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* =========================================================
+       LESSON CARD
+       ========================================================= */
+    .lesson-card {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: border-color 0.15s ease;
+      gap: 12px;
+    }
+
+    .lesson-card:hover {
+      border-color: rgba(28, 123, 196, 0.3);
+    }
+
+    .lesson-card-top {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Thumbnail */
+    .lesson-thumb {
+      flex-shrink: 0;
+      width: 110px;
+      height: 70px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #FFFFFF;
+      position: relative;
+    }
+
+    .lesson-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lesson-thumb-icon {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+      font-size: 26px;
+    }
+
+    /* Body */
+    .lesson-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .lesson-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.4;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .lesson-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .lesson-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .lesson-badge--kind-video {
+      background: var(--color-blue-light);
+      color: var(--color-blue-dark);
+    }
+
+    .lesson-badge--kind-audio {
+      background: var(--color-green-light);
+      color: var(--color-green-dark);
+    }
+
+    .lesson-badge--stage {
+      background: var(--color-surface-soft);
+      color: var(--color-text-muted);
+    }
+
+    /* Meta */
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .lesson-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Actions */
+    .lesson-actions {
+      display: flex;
+      gap: 6px;
+      padding-top: 10px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .lesson-action-btn {
+      flex: 1;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border-radius: 10px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-surface);
+      font-family: var(--font-arabic);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .lesson-action-btn:hover { background: var(--color-surface-soft); }
+
+    .lesson-action-btn--info {
+      color: var(--color-blue-dark);
+      border-color: rgba(28, 123, 196, 0.3);
+    }
+    .lesson-action-btn--info:hover { background: rgba(28, 123, 196, 0.06); }
+
+    .lesson-action-btn--danger {
+      color: var(--color-red-dark);
+      border-color: rgba(224, 58, 47, 0.3);
+    }
+    .lesson-action-btn--danger:hover { background: rgba(224, 58, 47, 0.06); }
+
+    /* =========================================================
+       STATES
+       ========================================================= */
+    .adm-state {
+      padding: 44px 20px;
+      text-align: center;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+
+    .adm-state-icon { font-size: 40px; margin-bottom: 10px; line-height: 1; }
+
+    .adm-state-title {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .adm-state-text {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Skeleton */
+    .adm-skeleton {
+      height: 130px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, var(--color-border) 25%, var(--color-border) 50%, var(--color-border) 75%);
+      background-size: 200% 100%;
+      animation: adm-shimmer 1.4s ease-in-out infinite;
+    }
+
+    @keyframes adm-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* =========================================================
+       MODAL
+       ========================================================= */
+    .adm-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .adm-modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .adm-modal {
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-surface);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+      transform: scale(0.95);
+      transition: transform 0.2s ease;
+    }
+
+    .adm-modal-overlay.is-open .adm-modal {
+      transform: scale(1);
+    }
+
+    .adm-modal-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--color-text);
+      text-align: center;
+    }
+
+    .adm-modal-sub {
+      margin: 0 0 18px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .adm-modal-group { margin-bottom: 14px; }
+
+    .adm-modal-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .adm-modal-label .required {
+      color: var(--color-red);
+      margin-inline-start: 4px;
+    }
+
+    .adm-modal-input,
+    .adm-modal-select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg);
+      font-family: var(--font-arabic);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .adm-modal-input:focus,
+    .adm-modal-select:focus {
+      outline: none;
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(28, 123, 196, 0.12);
+    }
+
+    .adm-modal-select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .adm-modal-note {
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* Preview inside modal */
+    .adm-modal-preview {
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-size: 32px;
+    }
+
+    .adm-modal-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .adm-modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .adm-modal-btn {
+      flex: 1;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-family: var(--font-arabic);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.12s ease;
+    }
+
+    .adm-modal-btn--cancel {
+      background: var(--color-surface-soft);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .adm-modal-btn--primary {
+      background: var(--color-blue);
+      color: #FFFFFF;
+      box-shadow: 0 3px 0 var(--color-blue-dark);
+    }
+
+    .adm-modal-btn--primary:active {
+      transform: translateY(3px);
+      box-shadow: 0 0 0 var(--color-blue-dark);
+    }
+
+    .adm-modal-btn--primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* =========================================================
+       BOTTOM NAV
+       ========================================================= */
+    .adm-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      inset-inline: 0;
+      z-index: 60;
+      display: flex;
+      align-items: stretch;
+      height: 72px;
+      padding-bottom: var(--safe-bottom);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .adm-bottom-nav::-webkit-scrollbar { display: none; }
+
+    .adm-nav-item {
+      flex: 1 0 auto;
+      min-width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 6px;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .adm-nav-item:hover { color: var(--color-text); }
+    .adm-nav-item.is-active { color: var(--color-purple-dark); }
+
+    .adm-nav-icon { font-size: 18px; line-height: 1; }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (min-width: 700px) {
+      .adm-content { padding: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lesson-card,
+      .ls-stat,
+      .ls-filter,
+      .lesson-action-btn,
+      .adm-modal-overlay,
+      .adm-modal {
+        transition: none;
+      }
+      .adm-skeleton { animation: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+
+<body>
+
+  <div class="adm-page">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="adm-header">
+      <div class="adm-header-inner">
+
+        <a href="index.html" class="adm-back-btn" aria-label="رجوع">
+          <span class="icon icon-arrow-forward" aria-hidden="true"></span>
+        </a>
+
+        <div class="adm-header-brand">
+          <h1 class="adm-header-title">الدروس</h1>
+          <p class="adm-header-sub" id="lsHeaderSub">إدارة دروس الفيديو والصوت</p>
+        </div>
+
+        <button
+          type="button"
+          class="adm-header-btn adm-header-btn--primary"
+          id="lsCreateBtn"
+          title="إضافة درس"
+          aria-label="إضافة درس"
+        >
+          <span class="icon icon-plus" aria-hidden="true"></span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- ============================================================
+         CONTENT
+         ============================================================ -->
+    <main class="adm-content">
+
+      <!-- Stats -->
+      <section class="ls-stats" id="lsStats">
+        <div class="ls-stat is-active" data-kind="all">
+          <div class="ls-stat-value" id="statLsAll">0</div>
+          <div class="ls-stat-label">الكل</div>
+        </div>
+        <div class="ls-stat" data-kind="video">
+          <div class="ls-stat-value is-blue" id="statLsVideo">0</div>
+          <div class="ls-stat-label">فيديو</div>
+        </div>
+        <div class="ls-stat" data-kind="audio">
+          <div class="ls-stat-value is-green" id="statLsAudio">0</div>
+          <div class="ls-stat-label">صوت</div>
+        </div>
+      </section>
+
+      <!-- Toolbar -->
+      <section class="ls-toolbar">
+
+        <div class="ls-search">
+          <span class="ls-search-icon" aria-hidden="true"><span class="icon icon-search" aria-hidden="true"></span></span>
+          <input
+            type="text"
+            id="lsSearchInput"
+            placeholder="ابحث بعنوان الدرس..."
+            inputmode="text"
+            spellcheck="false"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="ls-filters" id="lsStageFilters">
+          <button type="button" class="ls-filter is-active" data-stage="all">
+            كل المراحل
+          </button>
+          <button type="button" class="ls-filter" data-stage="grade_4">رابعة ابتدائي</button>
+          <button type="button" class="ls-filter" data-stage="grade_5">خامسة ابتدائي</button>
+          <button type="button" class="ls-filter" data-stage="grade_6">سادسة ابتدائي</button>
+          <button type="button" class="ls-filter" data-stage="prep_1">أولى إعدادي</button>
+          <button type="button" class="ls-filter" data-stage="prep_2">ثانية إعدادي</button>
+          <button type="button" class="ls-filter" data-stage="prep_3">ثالثة إعدادي</button>
+          <button type="button" class="ls-filter" data-stage="sec_1">أولى ثانوي</button>
+          <button type="button" class="ls-filter" data-stage="sec_2">ثانية ثانوي</button>
+          <button type="button" class="ls-filter" data-stage="sec_3">ثالثة ثانوي</button>
+        </div>
+
+      </section>
+
+      <!-- States -->
+      <div id="lsSkeleton">
+        <div class="ls-list">
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+        </div>
+      </div>
+
+      <div class="adm-state" id="lsEmpty" style="display: none;">
+        <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-video" aria-hidden="true"></span></div>
+        <h3 class="adm-state-title">لا توجد دروس</h3>
+        <p class="adm-state-text">ابدأ بإضافة أول درس للطلاب.</p>
+      </div>
+
+      <div class="adm-state" id="lsError" style="display: none;">
+        <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-warning" aria-hidden="true"></span></div>
+        <h3 class="adm-state-title">تعذر تحميل الدروس</h3>
+        <p class="adm-state-text">تأكد من الاتصال بالإنترنت وحاول مرة أخرى.</p>
+        <button
+          type="button"
+          id="lsRetryBtn"
+          style="
+            margin-top: 14px;
+            min-height: 42px;
+            padding: 0 20px;
+            border-radius: 12px;
+            background: var(--color-blue);
+            color: #FFFFFF;
+            font-family: var(--font-arabic);
+            font-size: 13px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--color-blue-dark);
+          "
+        >
+          حاول مرة أخرى
+        </button>
+      </div>
+
+      <!-- List -->
+      <div class="ls-list" id="lsList" style="display: none;"></div>
+
+    </main>
+
+    <!-- ============================================================
+         CREATE / EDIT MODAL
+         ============================================================ -->
+    <div
+      class="adm-modal-overlay"
+      id="lsModal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="lsModalTitle"
+    >
+      <div class="adm-modal">
+
+        <h2 class="adm-modal-title" id="lsModalTitle">درس جديد</h2>
+        <p class="adm-modal-sub" id="lsModalSub">سيظهر الدرس للطلاب حسب المرحلة.</p>
+
+        <!-- العنوان -->
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="lsTitleInput">
+            عنوان الدرس <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="adm-modal-input"
+            id="lsTitleInput"
+            placeholder="مثال: الدرس الأول — مقدمة"
+            maxlength="150"
+          />
+        </div>
+
+        <!-- النوع -->
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="lsKindSelect">
+            نوع الدرس <span class="required">*</span>
+          </label>
+          <select class="adm-modal-select" id="lsKindSelect">
+            <option value="video">فيديو</option>
+            <option value="audio">صوت</option>
+          </select>
+        </div>
+
+        <!-- المرحلة -->
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="lsStageSelect">
+            المرحلة الدراسية <span class="required">*</span>
+          </label>
+          <select class="adm-modal-select" id="lsStageSelect">
+            <option value="">اختر المرحلة</option>
+            <option value="grade_4">الصف الرابع الابتدائي</option>
+            <option value="grade_5">الصف الخامس الابتدائي</option>
+            <option value="grade_6">الصف السادس الابتدائي</option>
+            <option value="prep_1">الصف الأول الإعدادي</option>
+            <option value="prep_2">الصف الثاني الإعدادي</option>
+            <option value="prep_3">الصف الثالث الإعدادي</option>
+            <option value="sec_1">الصف الأول الثانوي</option>
+            <option value="sec_2">الصف الثاني الثانوي</option>
+            <option value="sec_3">الصف الثالث الثانوي</option>
+          </select>
+        </div>
+
+        <!-- رابط YouTube -->
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="lsUrlInput">
+            رابط YouTube <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="adm-modal-input"
+            id="lsUrlInput"
+            placeholder="https://www.youtube.com/watch?v=..."
+            maxlength="500"
+            dir="ltr"
+          />
+          <p class="adm-modal-note" id="lsUrlHint">
+            الصق أي رابط من YouTube (watch / youtu.be / embed).
+          </p>
+        </div>
+
+        <!-- Preview -->
+        <div class="adm-modal-preview" id="lsPreview">
+          <span aria-hidden="true"><span class="icon icon-clapperboard" aria-hidden="true"></span></span>
+        </div>
+
+        <!-- Actions -->
+        <div class="adm-modal-actions">
+          <button
+            type="button"
+            class="adm-modal-btn adm-modal-btn--cancel"
+            id="lsCancelBtn"
+          >
+            إلغاء
+          </button>
+          <button
+            type="button"
+            class="adm-modal-btn adm-modal-btn--primary"
+            id="lsConfirmBtn"
+          >
+            إضافة
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BOTTOM NAV (Admin)
+         ============================================================ -->
+    <nav class="adm-bottom-nav" aria-label="التنقل الإداري">
+
+      <a href="index.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-home" aria-hidden="true"></span></span>
+        <span>الرئيسية</span>
+      </a>
+
+      <a href="students.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></span>
+        <span>الطلاب</span>
+      </a>
+
+      <a href="codes.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-key" aria-hidden="true"></span></span>
+        <span>الأكواد</span>
+      </a>
+
+      <a href="announcements.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-announcement" aria-hidden="true"></span></span>
+        <span>إعلانات</span>
+      </a>
+
+      <a href="exams.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-exam-paper" aria-hidden="true"></span></span>
+        <span>اختبارات</span>
+      </a>
+
+      <a href="settings.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-settings" aria-hidden="true"></span></span>
+        <span>الإعدادات</span>
+      </a>
+
+    </nav>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script type="module" src="../js/admin-lessons.js"></script>
+
+</body>
+</html>

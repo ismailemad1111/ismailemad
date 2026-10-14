@@ -1,0 +1,421 @@
+/**
+ * layout.css
+ * ------------------------------------------------------------
+ * منصة أ/ إسماعيل عماد التعليمية
+ * الهيكل العام (App Shell) + Header + Bottom Navigation.
+ *
+ * المكان: /css/layout.css
+ *
+ * المرجع:
+ *   - Master Design System (بنود 06، 07، 13، 14، 45، 46، 61، 64)
+ *   - الوثيقة الأصلية (بنود 13، 15، 72، 73)
+ *
+ * ⚠️ القواعد:
+ *   - كل القيم من tokens.css.
+ *   - Safe Area مطبق على Header و Bottom Nav (بند 13).
+ *   - Bottom Navigation لا يزيد عن 5 عناصر أساسية (بند 72 من الوثيقة + بند 13 من Design System).
+ * ------------------------------------------------------------
+ */
+
+
+/* ============================================================
+   01 — APP SHELL
+   المرجع: Design System — البند 64
+   الهيكل العام لأي صفحة داخل المنصة.
+   ============================================================ */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+}
+
+/* المحتوى الأساسي بين الهيدر والـ Bottom Nav */
+.app-main {
+  flex: 1;
+  padding-top: calc(var(--safe-top) + 64px);      /* ارتفاع الهيدر */
+  padding-bottom: calc(var(--safe-bottom) + 76px); /* ارتفاع الـ Bottom Nav */
+}
+
+/* لو الصفحة مش فيها Bottom Nav (زي login / subscribe) */
+.app-main.no-bottom-nav {
+  padding-bottom: var(--space-32);
+}
+
+/* لو الصفحة مش فيها Header (زي شاشة الاختبار الكامل) */
+.app-main.no-header {
+  padding-top: var(--safe-top);
+}
+
+
+/* ============================================================
+   02 — HEADER
+   المرجع: Design System — البنود 13، 14
+   رأس الصفحة الأساسي.
+   ============================================================ */
+
+.app-header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: var(--z-header);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+
+  height: 64px;
+  padding: var(--space-8) var(--space-16);
+  padding-top: calc(var(--safe-top) + var(--space-8));
+
+  background-color: var(--color-surface);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* الوضع المدمج (شفاف فوق محتوى) */
+.app-header.is-transparent {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+/* الشعار أو العنوان */
+.app-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.app-header-brand img,
+.app-header-brand svg {
+  height: 28px;
+  width: auto;
+}
+
+/* أزرار الإجراءات على الجانب الآخر من الهيدر */
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* زر رجوع داخل الهيدر (للصفحات الفرعية) */
+.app-header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--touch-min);
+  height: var(--touch-min);
+  padding: var(--space-8);
+
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-circle);
+  color: var(--color-text);
+  cursor: pointer;
+
+  transition: background-color var(--transition-fast);
+}
+
+.app-header-back:hover {
+  background-color: var(--color-surface-soft);
+}
+
+
+/* ============================================================
+   03 — PAGE HEADER
+   المرجع: Design System — البنود 11، 13، 14
+   رأس داخلي للصفحة (تحت الهيدر الأساسي).
+   الاستخدام: عنوان الصفحة + وصف مختصر.
+   ============================================================ */
+
+.page-header {
+  padding: var(--space-20) var(--space-16) var(--space-16);
+  background-color: var(--color-bg);
+}
+
+.page-header-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-black);
+  color: var(--color-text);
+  line-height: var(--lh-tight);
+  margin-bottom: var(--space-4);
+}
+
+.page-header-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: var(--lh-normal);
+}
+
+/* Page Header ملون حسب القسم */
+.page-header-blue   { background-color: var(--color-blue-light); }
+.page-header-green  { background-color: var(--color-green-light); }
+.page-header-yellow { background-color: var(--color-yellow-light); }
+.page-header-purple { background-color: var(--color-purple-light); }
+
+
+/* ============================================================
+   04 — BOTTOM NAVIGATION
+   المرجع: الوثيقة الأصلية — بنود 72، 73
+   المرجع: Design System — البند 13
+
+   القاعدة:
+     - 5 عناصر أساسية + زر "المزيد" لو محتاجين (بند 13 Design System).
+     - العنصر النشط بلون القسم.
+     - min-height = 44px لكل عنصر (بند 123).
+   ============================================================ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  inset-inline: 0;
+  z-index: var(--z-bottom-nav);
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+
+  height: 76px;
+  padding-bottom: var(--safe-bottom);
+
+  background-color: var(--color-surface);
+  border-top: 2px solid var(--color-primary);
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-4);
+
+  background: transparent;
+  border: none;
+  text-decoration: none;
+
+  font-family: var(--font-arabic);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-muted);
+
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: color var(--transition-fast);
+}
+
+.bottom-nav-item:hover {
+  color: var(--color-text);
+}
+
+/* أيقونة العنصر */
+.bottom-nav-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* العنصر النشط */
+.bottom-nav-item.is-active {
+  color: var(--color-primary);
+  font-weight: var(--fw-bold);
+}
+
+/* العنصر النشط: شريط ماركر أصفر أعلى العنصر + أيقونة بخلفية ماركر */
+.bottom-nav-item.is-active::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  inset-inline: 22%;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background-color: var(--color-yellow);
+}
+
+.bottom-nav-item.is-active .bottom-nav-icon {
+  color: var(--color-primary);
+}
+
+/* كل عنصر وله لونه عند التنشيط */
+/* هوية موحّدة: لون العنصر النشط هو لون الحبر في كل الأقسام */
+.bottom-nav-item.is-active.nav-blue,
+.bottom-nav-item.is-active.nav-purple,
+.bottom-nav-item.is-active.nav-yellow,
+.bottom-nav-item.is-active.nav-green  { color: var(--color-primary); }
+
+/* Badge على عنصر (للرسائل غير المقروءة) */
+.bottom-nav-item .badge {
+  position: absolute;
+  top: 4px;
+  inset-inline-end: calc(50% - 18px);
+}
+
+
+/* ============================================================
+   05 — MAIN CONTENT AREA
+   المرجع: Design System — البند 46
+   ============================================================ */
+
+.page-content {
+  padding: var(--space-16);
+}
+
+.page-content-tight {
+  padding: var(--space-8) var(--space-16);
+}
+
+.page-section {
+  margin-bottom: var(--space-24);
+}
+
+.page-section-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: var(--space-12);
+  line-height: var(--lh-tight);
+}
+
+.page-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  margin-bottom: var(--space-12);
+}
+
+.page-section-header .page-section-title {
+  margin-bottom: 0;
+}
+
+/* شبكة بسيطة للعناصر */
+.grid {
+  display: grid;
+  gap: var(--space-12);
+  grid-template-columns: 1fr;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Flex Helpers */
+.flex        { display: flex; }
+.flex-col    { display: flex; flex-direction: column; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between{ display: flex; align-items: center; justify-content: space-between; }
+.flex-wrap   { flex-wrap: wrap; }
+.gap-8       { gap: var(--space-8); }
+.gap-12      { gap: var(--space-12); }
+.gap-16      { gap: var(--space-16); }
+
+
+/* ============================================================
+   06 — SIDEBAR (للشاشات الكبيرة)
+   المرجع: Design System — البند 13
+   ============================================================ */
+
+.app-sidebar {
+  display: none;   /* مخفي على الموبايل */
+}
+
+@media (min-width: 1024px) {
+
+  /* إخفاء الـ Bottom Nav على الديسكتوب */
+  .bottom-nav {
+    display: none;
+  }
+
+  /* إظهار الـ Sidebar */
+  .app-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    bottom: 0;
+    z-index: var(--z-header);
+
+    width: 240px;
+    padding: var(--space-24) var(--space-16);
+    padding-top: calc(var(--safe-top) + var(--space-24));
+
+    background-color: var(--color-surface);
+    border-inline-end: 1px solid var(--color-border);
+    gap: var(--space-4);
+  }
+
+  /* تعديل المحتوى ليتجنب الـ Sidebar */
+  .app-shell.has-sidebar .app-main {
+    padding-inline-start: 240px;
+    padding-bottom: var(--space-32);
+  }
+
+  .app-shell.has-sidebar .app-header {
+    padding-inline-start: calc(240px + var(--space-16));
+  }
+}
+
+
+/* ============================================================
+   07 — RESPONSIVE ADJUSTMENTS
+   المرجع: Design System — البند 45
+   القاعدة: Desktop ليس مجرد نسخة مكبرة من Mobile.
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  .page-content {
+    padding: var(--space-24);
+  }
+
+  .grid {
+    gap: var(--space-16);
+  }
+
+  .grid-2-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .page-content {
+    max-width: 900px;
+    margin-inline: auto;
+    padding: var(--space-32) var(--space-24);
+  }
+
+  .page-header {
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .page-header-title {
+    font-size: var(--fs-3xl);
+  }
+
+  .grid-3-lg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

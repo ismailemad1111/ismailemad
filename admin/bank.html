@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>بنك مستر إسماعيل — لوحة التحكم</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/admin-bank.css" />
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+<body>
+  <div class="adm-page">
+
+    <header class="adm-header">
+      <div class="adm-header-inner">
+        <a href="index.html" class="adm-back-btn" aria-label="رجوع">
+          <span class="icon icon-arrow-forward" aria-hidden="true"></span>
+        </a>
+        <div class="adm-header-brand">
+          <h1 class="adm-header-title">بنك مستر إسماعيل</h1>
+          <p class="adm-header-sub">الجوائز والأرصدة والطلبات والمنع</p>
+        </div>
+        <button type="button" class="adm-header-btn adm-header-btn--primary" id="abkAddReward" title="إضافة جائزة" aria-label="إضافة جائزة">
+          <span class="icon icon-plus" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="adm-content">
+
+      <div class="abk-tabs" role="tablist" aria-label="أقسام البنك">
+        <button type="button" class="abk-tab is-active" role="tab" data-tab="rewards" aria-selected="true">الجوائز</button>
+        <button type="button" class="abk-tab" role="tab" data-tab="wallets" aria-selected="false">أرصدة الطلاب</button>
+        <button type="button" class="abk-tab" role="tab" data-tab="orders" aria-selected="false">الطلبات<span class="abk-count" id="abkOrdersCount" hidden>0</span></button>
+        <button type="button" class="abk-tab" role="tab" data-tab="bans" aria-selected="false">المنع<span class="abk-count" id="abkBansCount" hidden>0</span></button>
+      </div>
+
+      <!-- ===== الجوائز ===== -->
+      <section class="abk-panel" id="abkPanel-rewards">
+        <div class="abk-toolbar">
+          <input class="adm-modal-input" id="abkRewardSearch" type="search" placeholder="ابحث باسم الجائزة" aria-label="بحث في الجوائز" />
+          <select class="adm-modal-select" id="abkRewardFilter" aria-label="تصفية الجوائز">
+            <option value="all">كل الجوائز</option>
+            <option value="published">المنشورة</option>
+            <option value="hidden">المخفية</option>
+          </select>
+        </div>
+        <div class="adm-state" id="abkRewardsLoading"><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-grid" id="abkRewardsGrid" hidden></div>
+        <div class="adm-state" id="abkRewardsEmpty" hidden>
+          <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-trophy"></span></div>
+          <h3 class="adm-state-title">لا توجد جوائز</h3>
+          <p class="adm-state-text">اضغط زر + لإضافة أول جائزة للطلاب.</p>
+        </div>
+        <div class="adm-state" id="abkRewardsError" hidden>
+          <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-warning"></span></div>
+          <h3 class="adm-state-title">تعذر تحميل الجوائز</h3>
+          <button type="button" class="abk-btn abk-btn--primary" data-retry="rewards">حاول مرة أخرى</button>
+        </div>
+      </section>
+
+      <!-- ===== أرصدة الطلاب ===== -->
+      <section class="abk-panel" id="abkPanel-wallets" hidden>
+        <div class="abk-toolbar">
+          <input class="adm-modal-input" id="abkStudentSearch" type="search" placeholder="ابحث بالاسم أو الكود" aria-label="بحث عن طالب" />
+        </div>
+
+        <div class="abk-detail" id="abkStudentDetail" hidden>
+          <h3 class="abk-row-title" id="abkDetailName"></h3>
+          <p class="abk-row-sub" id="abkDetailSub"></p>
+          <div class="abk-balance-big" id="abkDetailBalance">0</div>
+          <div class="abk-inline" style="margin-top:12px">
+            <button type="button" class="abk-btn abk-btn--primary" id="abkCreditBtn">إضافة رصيد</button>
+            <button type="button" class="abk-btn abk-btn--danger" id="abkDebitBtn">خصم رصيد</button>
+          </div>
+          <h4 class="abk-row-title" style="margin-top:16px">سجل المعاملات</h4>
+          <div class="abk-list" id="abkLedger" style="margin-top:8px"></div>
+        </div>
+
+        <div class="adm-state" id="abkStudentsLoading"><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-list" id="abkStudentsList" hidden></div>
+        <div class="adm-state" id="abkStudentsEmpty" hidden>
+          <h3 class="adm-state-title">لا يوجد طلاب مطابقون</h3>
+        </div>
+        <div class="adm-state" id="abkStudentsError" hidden>
+          <h3 class="adm-state-title">تعذر تحميل الطلاب</h3>
+          <button type="button" class="abk-btn abk-btn--primary" data-retry="wallets">حاول مرة أخرى</button>
+        </div>
+      </section>
+
+      <!-- ===== الطلبات ===== -->
+      <section class="abk-panel" id="abkPanel-orders" hidden>
+        <p class="abk-policy">
+          <strong>السياسة المالية:</strong> يُخصم ثمن الجائزة فور تأكيد الطالب. رفض الطلب قبل التسليم يُرجع المبلغ كاملًا
+          تلقائيًا (معاملة استرجاع مستقلة) ويعيد الكمية للمخزون. بعد «تم التسليم» لا استرجاع ولا رفض.
+        </p>
+        <div class="abk-toolbar">
+          <select class="adm-modal-select" id="abkOrderFilter" aria-label="تصفية الطلبات">
+            <option value="all">كل الحالات</option>
+            <option value="pending">قيد المراجعة</option>
+            <option value="accepted">مقبول</option>
+            <option value="ready">جاهز للتسليم</option>
+            <option value="delivered">تم التسليم</option>
+            <option value="rejected">مرفوض</option>
+          </select>
+          <input class="adm-modal-input" id="abkOrderSearch" type="search" placeholder="ابحث باسم الطالب أو الجائزة" aria-label="بحث في الطلبات" />
+        </div>
+        <div class="adm-state" id="abkOrdersLoading"><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-list" id="abkOrdersList" hidden></div>
+        <div class="adm-state" id="abkOrdersEmpty" hidden>
+          <h3 class="adm-state-title">لا توجد طلبات</h3>
+        </div>
+        <div class="adm-state" id="abkOrdersError" hidden>
+          <h3 class="adm-state-title">تعذر تحميل الطلبات</h3>
+          <button type="button" class="abk-btn abk-btn--primary" data-retry="orders">حاول مرة أخرى</button>
+        </div>
+      </section>
+
+      <!-- ===== المنع ===== -->
+      <section class="abk-panel" id="abkPanel-bans" hidden>
+        <div class="abk-toolbar">
+          <select class="adm-modal-select" id="abkBanFilter" aria-label="تصفية المنع">
+            <option value="active">الساري فقط</option>
+            <option value="all">كل السجل</option>
+          </select>
+        </div>
+        <div class="adm-state" id="abkBansLoading"><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-list" id="abkBansList" hidden></div>
+        <div class="adm-state" id="abkBansEmpty" hidden>
+          <h3 class="adm-state-title">لا يوجد سجل منع</h3>
+        </div>
+        <div class="adm-state" id="abkBansError" hidden>
+          <h3 class="adm-state-title">تعذر تحميل سجل المنع</h3>
+          <button type="button" class="abk-btn abk-btn--primary" data-retry="bans">حاول مرة أخرى</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== نافذة الجائزة ===== -->
+    <div class="adm-modal-overlay" id="abkRewardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="abkRewardTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="abkRewardTitle">جائزة جديدة</h2>
+        <p class="adm-modal-sub">التعديل لا يغيّر الطلبات السابقة: كل طلب يحفظ اسم الجائزة وسعرها وقت الطلب.</p>
+        <p class="abk-error" id="abkRewardError" role="alert" hidden></p>
+
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkRName">الاسم</label>
+          <input class="adm-modal-input" id="abkRName" maxlength="100" autocomplete="off" />
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkRDesc">الوصف</label>
+          <textarea class="adm-modal-textarea" id="abkRDesc" maxlength="1000"></textarea>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkRPrice">السعر (فلوس افتراضية)</label>
+          <input class="adm-modal-input" id="abkRPrice" type="number" min="1" step="1" inputmode="numeric" />
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkRImage">الصورة (JPG / PNG / WebP)</label>
+          <input class="adm-modal-input" id="abkRImage" type="file" accept="image/jpeg,image/png,image/webp" />
+          <img class="abk-img-preview" id="abkRPreview" alt="معاينة الصورة" hidden />
+          <button type="button" class="abk-btn abk-btn--sm" id="abkRImageClear" hidden style="margin-top:8px">إزالة الصورة</button>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-check"><input type="checkbox" id="abkRLimited" /> الكمية محدودة</label>
+          <div id="abkRStockWrap" hidden>
+            <label class="adm-modal-label" for="abkRStock">الكمية المتبقية</label>
+            <input class="adm-modal-input" id="abkRStock" type="number" min="0" step="1" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-check"><input type="checkbox" id="abkRPublished" /> منشورة (تظهر للطلاب)</label>
+          <label class="adm-modal-check"><input type="checkbox" id="abkRRequestable" checked /> متاحة للطلب</label>
+        </div>
+
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="abkRCancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary" id="abkRSave">حفظ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== نافذة إضافة/خصم رصيد ===== -->
+    <div class="adm-modal-overlay" id="abkAdjustOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="abkAdjustTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="abkAdjustTitle">إضافة رصيد</h2>
+        <p class="adm-modal-sub" id="abkAdjustSub"></p>
+        <p class="abk-error" id="abkAdjustError" role="alert" hidden></p>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkAAmount">المبلغ</label>
+          <input class="adm-modal-input" id="abkAAmount" type="number" min="1" step="1" inputmode="numeric" />
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkAReason">السبب (إلزامي)</label>
+          <textarea class="adm-modal-textarea" id="abkAReason" maxlength="200"></textarea>
+        </div>
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="abkACancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary" id="abkAConfirm">تأكيد</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== نافذة سبب (رفض طلب / رفع منع) ===== -->
+    <div class="adm-modal-overlay" id="abkReasonOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="abkReasonTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="abkReasonTitle"></h2>
+        <p class="adm-modal-sub" id="abkReasonSub"></p>
+        <p class="abk-error" id="abkReasonError" role="alert" hidden></p>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="abkReasonText">السبب (إلزامي)</label>
+          <textarea class="adm-modal-textarea" id="abkReasonText" maxlength="200"></textarea>
+        </div>
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="abkReasonCancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary" id="abkReasonConfirm">تأكيد</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="adm-bottom-nav" aria-label="التنقل الإداري">
+      <a href="index.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-home"></span></span><span>الرئيسية</span></a>
+      <a href="students.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-users"></span></span><span>الطلاب</span></a>
+      <a href="bank.html" class="adm-nav-item is-active"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-trophy"></span></span><span>البنك</span></a>
+      <a href="announcements.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-announcement"></span></span><span>إعلانات</span></a>
+      <a href="exams.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-exam-paper"></span></span><span>اختبارات</span></a>
+      <a href="settings.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-settings"></span></span><span>الإعدادات</span></a>
+    </nav>
+  </div>
+
+  <script type="module" src="../js/admin-bank.js"></script>
+</body>
+</html>

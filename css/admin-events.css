@@ -1,0 +1,14 @@
+/* css/admin-events.css — إضافات صفحة admin/events.html (تعتمد على admin-bank.css للهيكل العام). البادئة: aev- */
+.aev-two { display: grid; grid-template-columns: 1fr; gap: 0 12px; }
+@media (min-width: 520px) { .aev-two { grid-template-columns: 1fr 1fr; } }
+.aev-ltr { text-align: left; }
+.aev-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+.aev-check { font-size: 12px; font-weight: 700; line-height: 1.6; }
+.aev-check.is-ok { color: var(--color-green-dark); }
+.aev-check.is-bad { color: var(--color-red-dark); }
+.aev-check.is-wait { color: var(--color-text-muted); }
+.aev-danger { background: var(--color-red-dark); border-color: var(--color-red-dark); }
+.aev-danger:active { background: var(--color-red); }
+.aev-file { font-family: var(--font-english); direction: ltr; unicode-bidi: embed; font-size: 12px; }
+.aev-score { font-family: var(--font-english); font-weight: 800; direction: ltr; }
+.abk-toolbar { flex-wrap: wrap; }

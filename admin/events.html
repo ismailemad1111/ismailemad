@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>الأحداث والألعاب — لوحة التحكم</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/admin-bank.css" />
+  <link rel="stylesheet" href="../css/admin-events.css" />
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+<body>
+  <div class="adm-page">
+
+    <header class="adm-header">
+      <div class="adm-header-inner">
+        <a href="index.html" class="adm-back-btn" aria-label="رجوع">
+          <span class="icon icon-arrow-forward" aria-hidden="true"></span>
+        </a>
+        <div class="adm-header-brand">
+          <h1 class="adm-header-title">الأحداث والألعاب</h1>
+          <p class="adm-header-sub">إدارة الأحداث ومراجعة المشاركات والنتائج</p>
+        </div>
+        <button type="button" class="adm-header-btn adm-header-btn--primary" id="aevAdd" title="إضافة حدث" aria-label="إضافة حدث">
+          <span class="icon icon-plus" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="adm-content">
+
+      <div class="abk-tabs" role="tablist" aria-label="أقسام الأحداث">
+        <button type="button" class="abk-tab is-active" role="tab" data-tab="events" aria-selected="true">الأحداث</button>
+        <button type="button" class="abk-tab" role="tab" data-tab="parts" aria-selected="false">المشاركات والنتائج<span class="abk-count" id="aevPendingCount" hidden>0</span></button>
+      </div>
+
+      <!-- ===== الأحداث ===== -->
+      <section class="abk-panel" id="aevPanel-events">
+        <p class="abk-policy">
+          <strong>الألعاب:</strong> ضع ملف اللعبة (مثل <bdi dir="ltr">game-science.html</bdi>) في جذر المشروع بجانب <bdi dir="ltr">index.html</bdi>
+          ثم انشر الموقع، واكتب اسم الملف في حقل «اسم ملف اللعبة». لا يوجد رفع من هنا.
+        </p>
+        <div class="abk-toolbar">
+          <input class="adm-modal-input" id="aevSearch" type="search" placeholder="ابحث باسم الحدث" aria-label="بحث في الأحداث" />
+          <select class="adm-modal-select" id="aevFilter" aria-label="تصفية الأحداث">
+            <option value="all">كل الحالات</option>
+            <option value="published">المنشورة</option>
+            <option value="draft">المسودات</option>
+            <option value="hidden">المخفية</option>
+          </select>
+        </div>
+        <div class="adm-state" id="aevLoading"><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-grid" id="aevGrid" hidden></div>
+        <div class="adm-state" id="aevEmpty" hidden>
+          <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-rocket"></span></div>
+          <h3 class="adm-state-title" id="aevEmptyTitle">لا توجد أحداث</h3>
+          <p class="adm-state-text" id="aevEmptyText">اضغط زر + لإضافة أول حدث للطلاب.</p>
+        </div>
+        <div class="adm-state" id="aevError" hidden>
+          <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-warning"></span></div>
+          <h3 class="adm-state-title">تعذر تحميل الأحداث</h3>
+          <p class="adm-state-text" id="aevErrorText"></p>
+          <button type="button" class="abk-btn abk-btn--primary" id="aevRetry">حاول مرة أخرى</button>
+        </div>
+      </section>
+
+      <!-- ===== المشاركات ===== -->
+      <section class="abk-panel" id="aevPanel-parts" hidden>
+        <div class="abk-toolbar">
+          <select class="adm-modal-select" id="aevPartEvent" aria-label="اختر الحدث"></select>
+          <select class="adm-modal-select" id="aevPartFilter" aria-label="تصفية المشاركات">
+            <option value="all">كل المشاركات</option>
+            <option value="pending">نتائج تنتظر المراجعة</option>
+            <option value="completed">المكتملة</option>
+            <option value="started">لم تكتمل</option>
+          </select>
+          <input class="adm-modal-input" id="aevPartSearch" type="search" placeholder="ابحث بالاسم أو الكود" aria-label="بحث في المشاركين" />
+        </div>
+        <p class="abk-policy" id="aevPartSummary" hidden></p>
+        <div class="adm-state" id="aevPartsLoading" hidden><p class="adm-state-text">جارٍ التحميل…</p></div>
+        <div class="abk-list" id="aevPartsList" hidden></div>
+        <div class="adm-state" id="aevPartsEmpty">
+          <h3 class="adm-state-title" id="aevPartsEmptyTitle">اختر حدثًا لعرض مشاركاته</h3>
+        </div>
+        <div class="adm-state" id="aevPartsError" hidden>
+          <h3 class="adm-state-title">تعذر تحميل المشاركات</h3>
+          <p class="adm-state-text" id="aevPartsErrorText"></p>
+          <button type="button" class="abk-btn abk-btn--primary" id="aevPartsRetry">حاول مرة أخرى</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== نافذة الحدث ===== -->
+    <div class="adm-modal-overlay" id="aevOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aevFormTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="aevFormTitle">حدث جديد</h2>
+        <p class="adm-modal-sub">تعديل الحدث لا يمسّ مشاركات الطلاب المسجّلة فيه.</p>
+        <p class="abk-error" id="aevFormError" role="alert" hidden></p>
+
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevTitle">اسم الحدث</label>
+          <input class="adm-modal-input" id="aevTitle" maxlength="120" autocomplete="off" />
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevDesc">الوصف</label>
+          <textarea class="adm-modal-textarea" id="aevDesc" maxlength="2000"></textarea>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevImage">الصورة (JPG / PNG / WebP)</label>
+          <input class="adm-modal-input" id="aevImage" type="file" accept="image/jpeg,image/png,image/webp" />
+          <img class="abk-img-preview" id="aevPreview" alt="معاينة الصورة" hidden />
+          <button type="button" class="abk-btn abk-btn--sm" id="aevImageClear" hidden style="margin-top:8px">إزالة الصورة</button>
+        </div>
+        <div class="aev-two">
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevStart">بداية الحدث</label>
+            <input class="adm-modal-input" id="aevStart" type="datetime-local" />
+          </div>
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevEnd">نهاية الحدث</label>
+            <input class="adm-modal-input" id="aevEnd" type="datetime-local" />
+          </div>
+        </div>
+        <div class="aev-two">
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevStatus">حالة النشر</label>
+            <select class="adm-modal-select" id="aevStatus">
+              <option value="draft">مسودة (لا تظهر للطلاب)</option>
+              <option value="published">منشور (يظهر للطلاب)</option>
+              <option value="hidden">مخفي</option>
+            </select>
+          </div>
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevType">نوع الحدث</label>
+            <select class="adm-modal-select" id="aevType">
+              <option value="activity">نشاط</option>
+              <option value="game">لعبة تفاعلية</option>
+            </select>
+          </div>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevStage">المرحلة المسموح لها</label>
+          <select class="adm-modal-select" id="aevStage">
+            <option value="all">كل المراحل</option>
+            <option value="grade_4">الصف الرابع الابتدائي</option>
+            <option value="grade_5">الصف الخامس الابتدائي</option>
+            <option value="grade_6">الصف السادس الابتدائي</option>
+            <option value="prep_1">الصف الأول الإعدادي</option>
+            <option value="prep_2">الصف الثاني الإعدادي</option>
+            <option value="prep_3">الصف الثالث الإعدادي</option>
+            <option value="sec_1">الصف الأول الثانوي</option>
+            <option value="sec_2">الصف الثاني الثانوي</option>
+            <option value="sec_3">الصف الثالث الثانوي</option>
+          </select>
+        </div>
+
+        <div id="aevGameWrap" hidden>
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevGameFile">اسم ملف اللعبة</label>
+            <input class="adm-modal-input aev-ltr" id="aevGameFile" maxlength="70" autocomplete="off" spellcheck="false" placeholder="game-science.html" dir="ltr" />
+            <p class="adm-modal-note">ملف HTML موجود في جذر المشروع، يبدأ بـ <bdi dir="ltr">game-</bdi> وينتهي بـ <bdi dir="ltr">.html</bdi> (حروف إنجليزية وأرقام و - و _ فقط).</p>
+            <div class="aev-inline">
+              <button type="button" class="abk-btn abk-btn--sm" id="aevCheckFile">فحص وجود الملف على الموقع</button>
+              <span class="aev-check" id="aevCheckResult" role="status"></span>
+            </div>
+          </div>
+          <div class="adm-modal-group">
+            <label class="adm-modal-check"><input type="checkbox" id="aevScoreEnabled" /> اللعبة ترسل نقاطًا (تُراجع قبل الاعتماد)</label>
+            <div id="aevMaxWrap" hidden>
+              <label class="adm-modal-label" for="aevMaxScore">الحد الأقصى للنقاط</label>
+              <input class="adm-modal-input" id="aevMaxScore" type="number" min="1" step="1" inputmode="numeric" />
+            </div>
+          </div>
+        </div>
+
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="aevCancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary" id="aevSave">حفظ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== نافذة تأكيد الحذف ===== -->
+    <div class="adm-modal-overlay" id="aevDelOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aevDelTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="aevDelTitle">حذف الحدث</h2>
+        <p class="adm-modal-sub" id="aevDelText"></p>
+        <p class="abk-error" id="aevDelError" role="alert" hidden></p>
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="aevDelCancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary aev-danger" id="aevDelConfirm">حذف نهائي</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== نافذة مراجعة مشاركة ===== -->
+    <div class="adm-modal-overlay" id="aevRevOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aevRevTitle">
+      <div class="adm-modal">
+        <h2 class="adm-modal-title" id="aevRevTitle">مراجعة المشاركة</h2>
+        <p class="adm-modal-sub" id="aevRevSub"></p>
+        <p class="abk-error" id="aevRevError" role="alert" hidden></p>
+
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevRevStatus">حالة المشاركة</label>
+          <select class="adm-modal-select" id="aevRevStatus">
+            <option value="started">لم تكتمل</option>
+            <option value="completed">مكتملة</option>
+          </select>
+        </div>
+        <div id="aevRevScoreWrap" hidden>
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevRevScore">النقاط المعتمدة</label>
+            <input class="adm-modal-input" id="aevRevScore" type="number" min="0" step="1" inputmode="numeric" />
+            <p class="adm-modal-note" id="aevRevReported"></p>
+          </div>
+          <div class="adm-modal-group">
+            <label class="adm-modal-label" for="aevRevReview">حالة المراجعة</label>
+            <select class="adm-modal-select" id="aevRevReview">
+              <option value="pending">قيد المراجعة</option>
+              <option value="approved">معتمدة</option>
+              <option value="rejected">مرفوضة</option>
+            </select>
+          </div>
+        </div>
+        <div class="adm-modal-group">
+          <label class="adm-modal-label" for="aevRevNote">ملاحظة (اختياري)</label>
+          <textarea class="adm-modal-textarea" id="aevRevNote" maxlength="300"></textarea>
+        </div>
+
+        <div class="adm-modal-actions">
+          <button type="button" class="adm-modal-btn adm-modal-btn--cancel" id="aevRevCancel">إلغاء</button>
+          <button type="button" class="adm-modal-btn adm-modal-btn--primary" id="aevRevSave">حفظ</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="adm-bottom-nav" aria-label="التنقل الإداري">
+      <a href="index.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-home"></span></span><span>الرئيسية</span></a>
+      <a href="students.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-users"></span></span><span>الطلاب</span></a>
+      <a href="events.html" class="adm-nav-item is-active"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-rocket"></span></span><span>الأحداث</span></a>
+      <a href="announcements.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-announcement"></span></span><span>إعلانات</span></a>
+      <a href="exams.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-exam-paper"></span></span><span>اختبارات</span></a>
+      <a href="settings.html" class="adm-nav-item"><span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-settings"></span></span><span>الإعدادات</span></a>
+    </nav>
+  </div>
+
+  <script type="module" src="../js/admin-events.js"></script>
+</body>
+</html>

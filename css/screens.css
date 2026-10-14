@@ -1,0 +1,1213 @@
+/**
+ * screens.css
+ * ------------------------------------------------------------
+ * منصة أ/ إسماعيل عماد التعليمية
+ * تصميم الصفحات — هوية Editorial Learning (أبيض + حبر فحمي + أحمر العلامة).
+ *
+ * يُحمَّل بعد الأنماط المضمّنة في كل صفحة فيتغلّب عليها بالترتيب.
+ * كل القيم من tokens.css.
+ *
+ * الفهرس:
+ *   00 — نظام الأزرار الموحّد (أزرار الصفحات)
+ *   01 — سطح الصفحة وعناوين الأقسام
+ *   02 — ترويسة الصفحات الداخلية
+ *   03 — الرئيسية
+ *   04 — الاختبارات والدروس والإعلانات والملف الشخصي
+ *   05 — المنظّم والمساعد الذكي
+ *   06 — الدخول والاشتراك
+ *   07 — لوحة الإدارة
+ *   08 — الحالات (فارغ / تحميل / خطأ) والجداول والنوافذ
+ *   09 — الشاشات الكبيرة
+ * ------------------------------------------------------------
+ */
+
+
+/* ============================================================
+   00 — نظام الأزرار الموحّد
+   أساسي: أحمر العلامة الغامق (تباين 4.7:1 مع الأبيض) — مسطّح بلا ظل ثلاثي الأبعاد.
+   ثانوي: مخطّط بحافة محايدة.  خطر: مخطّط بالأحمر الغامق.
+   لا تغيّر هذه القواعد وظيفة أي زر؛ هي مظهر فقط.
+   ============================================================ */
+
+:is(
+  .ann-action-primary, .ex-action-start, .exam-start-btn, .exam-state-btn,
+  .pl-add-btn, .pl-modal-btn-save, .reply-btn-send, .login-submit-btn, .subscribe-submit-btn,
+  .exam-nav-next, .exam-nav-submit, .exam-confirm-submit
+) {
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
+  border: 0;
+  box-shadow: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-bold);
+}
+
+:is(
+  .ann-action-primary, .ex-action-start, .exam-start-btn, .exam-state-btn,
+  .pl-add-btn, .pl-modal-btn-save, .reply-btn-send, .login-submit-btn, .subscribe-submit-btn,
+  .exam-nav-next, .exam-nav-submit, .exam-confirm-submit
+):is(:hover, :focus-visible):not(:disabled) {
+  background: var(--color-primary-strong);
+  box-shadow: none;
+}
+
+:is(
+  .ann-action-primary, .ex-action-start, .exam-start-btn, .exam-state-btn,
+  .pl-add-btn, .pl-modal-btn-save, .reply-btn-send, .login-submit-btn, .subscribe-submit-btn,
+  .exam-nav-next, .exam-nav-submit, .exam-confirm-submit
+):active:not(:disabled) {
+  background: var(--color-primary-strong);
+  box-shadow: none;
+  transform: translateY(1px);
+}
+
+:is(.ann-action-secondary, .reply-btn-cancel, .pl-modal-btn-cancel, .pl-week-btn, .ex-action-result, .exam-nav-prev, .exam-confirm-cancel) {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border-strong);
+  box-shadow: none;
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-bold);
+}
+
+:is(.ann-action-secondary, .reply-btn-cancel, .pl-modal-btn-cancel, .pl-week-btn, .ex-action-result, .exam-nav-prev, .exam-confirm-cancel):hover {
+  background: var(--color-surface-soft);
+  border-color: var(--color-primary);
+}
+
+:is(.ex-action-result):active { box-shadow: none; transform: translateY(1px); }
+:is(.exam-nav-prev, .exam-confirm-cancel):hover { background: var(--color-surface-soft); }
+:is(.exam-nav-prev):disabled { opacity: 0.5; }
+
+:is(.pf-logout-btn) {
+  color: var(--color-red-dark);
+  border: 1.5px solid var(--color-red-dark);
+}
+
+:is(.pf-logout-btn):hover { background: var(--color-red-light); }
+
+.ai-send-btn {
+  background: var(--color-purple-dark);
+  box-shadow: none;
+}
+
+.ai-send-btn:hover:not(:disabled) { background: #523A8F; }
+
+/* معطّل: نفس المظهر في كل الأزرار */
+:is(
+  .ann-action-primary, .ex-action-start, .exam-start-btn, .exam-state-btn,
+  .pl-add-btn, .pl-modal-btn-save, .reply-btn-send, .login-submit-btn, .subscribe-submit-btn,
+  .exam-nav-next, .exam-nav-submit, .exam-confirm-submit, .ai-send-btn
+):disabled {
+  box-shadow: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* حجم لمس مريح على الهاتف */
+:is(.ann-action-btn, .reply-btn, .pl-modal-btn, .ex-action, .pl-add-btn, .exam-nav-btn, .exam-confirm-btn) { min-height: var(--touch-min); }
+
+/* حلقة تركيز موحّدة للوحة المفاتيح */
+:is(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 3px solid rgba(255, 70, 84, 0.55);
+  outline-offset: 2px;
+}
+
+
+
+/* ============================================================
+   01 — سطح الصفحة
+   الخلفية شفافة ليظهر ورق المربعات من body
+   ============================================================ */
+
+.home-page,
+.exams-page,
+.pf-page,
+.announcements-page,
+.lessons-page,
+.pl-page,
+.ai-page,
+.adm-page,
+.login-page,
+.subscribe-page {
+  background: transparent;
+}
+
+/* عناوين الأقسام: شريط أحمر قصير قبل العنوان بدل الخط المتعرّج */
+.home-section-title,
+.adm-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+}
+
+.home-section-title::before,
+.adm-section-title::before {
+  content: "";
+  flex-shrink: 0;
+  width: 4px;
+  height: 1em;
+  border-radius: 2px;
+  background: var(--color-primary);
+}
+
+.home-section-title { font-size: 21px; }
+.adm-section-title  { font-size: 18px; }
+
+/* رابط "شوف الكل / التفاصيل": نص بسهم، بدون خط سفلي ملوّن */
+.home-section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 32px;
+  padding-inline: var(--space-4);
+  color: var(--color-primary-dark);
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+
+.home-section-link::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: url("../icons/chevron-left.svg") center / contain no-repeat;
+  mask: url("../icons/chevron-left.svg") center / contain no-repeat;
+}
+
+.home-section-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.home-subsection-title {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+}
+
+
+/* ============================================================
+   02 — ترويسة الصفحات الداخلية
+   سطح أبيض بحد سفلي رفيع؛ الأيقونة في مربع بلون العلامة الفاتح.
+   ============================================================ */
+
+.ex-header,
+.pf-header,
+.ann-header,
+.ls-header,
+.pl-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.ex-title,
+.pf-title,
+.ann-title,
+.ls-title,
+.pl-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+.ex-subtitle,
+.pf-subtitle,
+.ann-subtitle,
+.ls-subtitle,
+.pl-subtitle {
+  color: var(--color-text-muted);
+  font-weight: var(--fw-medium);
+}
+
+.ex-header-icon,
+.pf-header-icon,
+.ann-header-icon,
+.ls-header-icon,
+.pl-header-icon {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-radius: var(--radius-md);
+}
+
+.ex-header-icon .icon,
+.pf-header-icon .icon,
+.ann-header-icon .icon,
+.ls-header-icon .icon,
+.pl-header-icon .icon { width: 24px; height: 24px; }
+
+
+/* ============================================================
+   03 — الرئيسية
+   ترحيب مفتوح على خلفية فاتحة، ثم بطاقات واضحة بحدود رفيعة.
+   ============================================================ */
+
+.home-welcome {
+  padding: calc(var(--safe-top) + var(--space-24)) var(--space-16) var(--space-20);
+  background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-bg) 100%);
+  border-bottom: 0;
+}
+
+.home-welcome-inner {
+  position: relative;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.home-welcome-inner::before { content: none; }
+
+.home-welcome-top,
+.home-welcome-context,
+.home-welcome-stage {
+  margin: 0;
+  line-height: var(--lh-normal);
+}
+
+.home-welcome-top { align-items: center; }
+
+.home-greeting {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 6vw, 30px);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+.home-greeting-name { color: var(--color-primary-dark); }
+
+.home-welcome-date {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+}
+
+.home-welcome-context {
+  margin-top: var(--space-4);
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+}
+
+.home-welcome-stage {
+  margin-top: var(--space-4);
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: var(--fw-bold);
+}
+
+/* "الأهم الآن" — أبرز عنصر في الصفحة: بطاقة بيضاء بحافة حمراء جانبية ولون واحد */
+.hero-action {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.hero-action:hover { box-shadow: var(--shadow-lifted); }
+
+.hero-action::before,
+.hero-action[data-variant]::before,
+.hero-action[class*="hero-"]::before { background: var(--color-primary); }
+
+.hero-action-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.hero-action-text { color: var(--color-text-muted); opacity: 1; }
+
+.hero-action .hero-action-label,
+.hero-action[class*="hero-"] .hero-action-label { color: var(--color-primary-dark); }
+
+.hero-action .hero-action-icon,
+.hero-action[class*="hero-"] .hero-action-icon {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-radius: var(--radius-md);
+}
+
+.hero-action-cta {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
+  font-weight: var(--fw-bold);
+}
+
+.hero-action-end {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--color-primary-dark);
+}
+
+/* التقدّم */
+.home-progress-highlight,
+.home-stat,
+.home-item,
+.home-today-row {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.home-progress-highlight-value {
+  font-family: var(--font-english);
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+.home-progress-bar {
+  height: 12px;
+  background: var(--color-surface-soft);
+  border: 1.5px solid var(--color-border);
+}
+
+.home-progress-bar-fill { background: var(--color-green); }
+
+.home-stat { border-top: 1px solid var(--color-border); }
+
+/* قيم الإحصاءات بلون النص؛ اللون الدلالي الوحيد هو أخضر شريط التقدّم */
+.home-stat-value.is-green,
+.home-stat-value.is-blue,
+.home-stat-value.is-yellow { color: var(--color-text); }
+
+.home-stat-value {
+  font-size: 24px;
+  font-weight: var(--fw-bold);
+}
+
+.home-stat-label {
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+}
+
+/* الأدوات: بلاطات منفصلة بدل لوحة واحدة مقسّمة */
+.home-tools-panel {
+  gap: var(--space-8);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.home-tools-item,
+.home-tools-item:nth-child(odd),
+.home-tools-item:not(.home-tools-item-wide) {
+  min-height: 64px;
+  padding: var(--space-12);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.home-tools-item:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* كل أيقونات الأدوات بنفس اللون (بلا ألوان عشوائية) */
+.home-tools-icon,
+.home-tools-icon.t-green,
+.home-tools-icon.t-blue,
+.home-tools-icon.t-yellow,
+.home-tools-icon.t-purple {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.home-tools-icon .icon { width: 19px; height: 19px; }
+
+.home-tools-label {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+}
+
+.home-item:hover { border-color: var(--color-primary); }
+
+/* أيقونة العنصر + سهم الانتقال */
+.home-item-icon {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.home-item::after {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-text-muted);
+  -webkit-mask: url("../icons/chevron-left.svg") center / contain no-repeat;
+  mask: url("../icons/chevron-left.svg") center / contain no-repeat;
+}
+
+/* إعلان لم يُقرأ: حافة جانبية ونقطة */
+.home-item.is-unread {
+  border-inline-start: 4px solid var(--color-primary);
+  background: #FFFAFA;
+}
+
+.home-item.is-unread .home-item-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: var(--space-8);
+  border-radius: 50%;
+  background: var(--color-primary);
+  vertical-align: middle;
+}
+
+/* ============================================================
+   الأدوات — لوحة "ابدأ من هنا"
+   بطاقات كبيرة بأحجام مختلفة: خلفيات متدرجة، أيقونة ضخمة نصف مختفية،
+   شريحة سهم، وظهور متتابع خفيف. الروابط والوجهات كما هي.
+   ============================================================ */
+
+.home-tools-panel {
+  --tool-arrow-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+  --tool-arrow-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317191D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.home-tools-panel .home-tools-item {
+  --tool-fg: #FFFFFF;
+  --tool-arrow: var(--tool-arrow-light);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+  min-height: 150px;
+  padding: var(--space-16);
+  border: 0;
+  border-radius: 22px;
+  color: var(--tool-fg);
+  text-align: start;
+  box-shadow: 0 10px 24px rgba(23, 25, 29, 0.12);
+  transform: translateZ(0);
+  animation: tool-rise .55s cubic-bezier(.2, .8, .2, 1) both;
+  transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
+}
+
+.home-tools-panel .home-tools-item:nth-child(1) { animation-delay: .02s; }
+.home-tools-panel .home-tools-item:nth-child(2) { animation-delay: .08s; }
+.home-tools-panel .home-tools-item:nth-child(3) { animation-delay: .14s; }
+.home-tools-panel .home-tools-item:nth-child(4) { animation-delay: .20s; }
+.home-tools-panel .home-tools-item:nth-child(5) { animation-delay: .26s; }
+.home-tools-panel .home-tools-item:nth-child(6) { animation-delay: .32s; }
+.home-tools-panel .home-tools-item:nth-child(7) { animation-delay: .38s; }
+
+@keyframes tool-rise {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.home-tools-panel .home-tools-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px rgba(23, 25, 29, 0.20);
+}
+
+.home-tools-panel .home-tools-item:active {
+  transform: scale(.975);
+  box-shadow: 0 6px 14px rgba(23, 25, 29, 0.14);
+}
+
+/* أيقونة ضخمة نصف مختفية في الزاوية */
+.home-tools-panel .home-tools-item::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 150px;
+  height: 150px;
+  inset-inline-end: -26px;
+  bottom: -30px;
+  background-color: currentColor;
+  opacity: .16;
+  transform: rotate(-12deg);
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1), opacity .3s ease;
+  -webkit-mask: var(--tool-glyph) center / contain no-repeat;
+  mask: var(--tool-glyph) center / contain no-repeat;
+}
+
+.home-tools-panel .home-tools-item:hover::before { transform: rotate(-4deg) scale(1.08); opacity: .24; }
+
+/* شريحة السهم أعلى الطرف المقابل */
+.home-tools-panel .home-tools-item::after {
+  content: "";
+  position: absolute;
+  top: var(--space-16);
+  inset-inline-end: var(--space-16);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .20) var(--tool-arrow) center / 17px no-repeat;
+  transition: transform .25s ease, background-color .25s ease;
+}
+
+.home-tools-panel .home-tools-item:hover::after { transform: translateX(-4px); background-color: rgba(255, 255, 255, .32); }
+
+/* الأيقونة الزجاجية والنص */
+.home-tools-panel .home-tools-item .home-tools-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .18);
+  color: var(--tool-fg);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+
+.home-tools-panel .home-tools-item .home-tools-icon .icon { width: 23px; height: 23px; }
+
+.home-tools-panel .home-tools-item .home-tools-label {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  line-height: 1.25;
+  color: var(--tool-fg);
+}
+
+.home-tools-panel .home-tools-item .home-tools-sub {
+  margin-top: 2px;
+  font-size: 12.5px;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  color: var(--tool-fg);
+  opacity: .8;
+}
+
+/* ---------- ألوان وتدرجات كل بطاقة ---------- */
+
+/* الدروس: فحمي بوهج أحمر — البطاقة الرئيسية */
+.home-tools-item[href="lessons.html"] {
+  --tool-glyph: url("../icons/video.svg");
+  grid-column: 1 / -1;
+  min-height: 168px;
+  background:
+    radial-gradient(120% 140% at 0% 100%, rgba(255, 70, 84, .55) 0%, rgba(255, 70, 84, 0) 55%),
+    radial-gradient(90% 100% at 100% 0%, rgba(255, 139, 151, .20) 0%, rgba(255, 139, 151, 0) 60%),
+    #17191D;
+}
+.home-tools-item[href="lessons.html"]::before { width: 190px; height: 190px; opacity: .20; }
+.home-tools-item[href="lessons.html"] .home-tools-label { font-size: 24px; }
+
+/* الاختبارات: أحمر العلامة */
+.home-tools-item[href="exams.html"] {
+  --tool-glyph: url("../icons/exam-paper.svg");
+  background: linear-gradient(155deg, #FF5A68 0%, #E23544 55%, #B71F2D 100%);
+}
+
+/* خطتك: أصفر دافئ بنقاط، نص داكن */
+.home-tools-item[href="planner.html"] {
+  --tool-fg: #17191D;
+  --tool-arrow: var(--tool-arrow-dark);
+  --tool-glyph: url("../icons/calendar.svg");
+  background:
+    radial-gradient(rgba(23, 25, 29, .09) 1.2px, transparent 1.4px) 0 0 / 14px 14px,
+    linear-gradient(160deg, #FFE9A8 0%, #FFD35C 100%);
+}
+.home-tools-item[href="planner.html"]::after { background-color: rgba(23, 25, 29, .10); }
+.home-tools-item[href="planner.html"] .home-tools-icon { background: rgba(23, 25, 29, .10); box-shadow: inset 0 0 0 1px rgba(23, 25, 29, .12); }
+.home-tools-item[href="planner.html"]::before { opacity: .12; }
+
+/* اسأل: بنفسجي لامع بلمعة تتحرك */
+.home-tools-item[href="ai.html"] {
+  --tool-glyph: url("../icons/sparkles.svg");
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-16);
+  align-content: center;
+  align-items: center;
+  min-height: 100px;
+  padding-inline-end: 64px;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, .22) 50%, rgba(255, 255, 255, 0) 65%) -150% 0 / 60% 100% no-repeat,
+    radial-gradient(80% 160% at 100% 0%, rgba(214, 196, 255, .55) 0%, rgba(214, 196, 255, 0) 60%),
+    linear-gradient(120deg, #4A2F94 0%, #7A5BD4 100%);
+  animation: tool-rise .55s cubic-bezier(.2, .8, .2, 1) .20s both, tool-shine 4.5s ease-in-out 1.2s infinite;
+}
+.home-tools-item[href="ai.html"] .home-tools-icon { grid-row: 1 / 3; }
+.home-tools-item[href="ai.html"] .home-tools-label { margin-top: 0; align-self: end; }
+.home-tools-item[href="ai.html"] .home-tools-sub { align-self: start; }
+.home-tools-item[href="ai.html"]::after { top: 50%; margin-top: -17px; }
+.home-tools-item[href="ai.html"]::before { width: 130px; height: 130px; bottom: -34px; inset-inline-end: 28px; opacity: .14; }
+
+@keyframes tool-shine {
+  0%, 55% { background-position: -150% 0, 0 0, 0 0; }
+  100%    { background-position: 260% 0, 0 0, 0 0; }
+}
+
+/* البنك: بني داكن بلمسة ذهبية */
+.home-tools-item[href="bank.html"] {
+  --tool-glyph: url("../icons/trophy.svg");
+  grid-column: auto;
+  min-height: 150px;
+  background:
+    radial-gradient(110% 120% at 0% 0%, rgba(244, 201, 93, .38) 0%, rgba(244, 201, 93, 0) 60%),
+    linear-gradient(160deg, #3B2D0E 0%, #1E1707 100%);
+}
+.home-tools-item[href="bank.html"] .home-tools-icon { background: rgba(244, 201, 93, .20); color: #F4C95D; box-shadow: inset 0 0 0 1px rgba(244, 201, 93, .35); }
+.home-tools-item[href="bank.html"]::before { color: #F4C95D; opacity: .22; }
+.home-tools-item[href="bank.html"] .home-tools-sub { color: #F4D98A; opacity: .9; }
+
+/* الأحداث: أزرق عميق والصاروخ يطفو */
+.home-tools-item[href="events.html"] {
+  --tool-glyph: url("../icons/rocket.svg");
+  grid-column: auto;
+  min-height: 150px;
+  background:
+    radial-gradient(100% 120% at 100% 100%, rgba(140, 180, 255, .45) 0%, rgba(140, 180, 255, 0) 60%),
+    linear-gradient(160deg, #3B6FD8 0%, #1B3C8C 100%);
+}
+.home-tools-item[href="bank.html"] .home-tools-label,
+.home-tools-item[href="events.html"] .home-tools-label,
+.home-tools-item[href="exams.html"] .home-tools-label,
+.home-tools-item[href="planner.html"] .home-tools-label { font-size: 17px; }
+.home-tools-item[href="events.html"]::before { animation: tool-float 4.2s ease-in-out infinite; }
+@keyframes tool-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+
+/* ملفي: شريط أبيض نحيف */
+.home-tools-item[href="profile.html"] {
+  --tool-fg: #17191D;
+  --tool-arrow: var(--tool-arrow-dark);
+  --tool-glyph: url("../icons/user.svg");
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-12);
+  align-content: center;
+  align-items: center;
+  min-height: 72px;
+  padding-block: var(--space-12);
+  padding-inline-end: 64px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+}
+.home-tools-item[href="profile.html"]::before { display: none; }
+.home-tools-item[href="profile.html"]::after { top: 50%; margin-top: -17px; background-color: var(--color-primary-light); }
+.home-tools-item[href="profile.html"] .home-tools-icon { grid-row: 1 / 3; width: 42px; height: 42px; background: var(--color-primary-light); color: var(--color-primary-dark); box-shadow: none; }
+.home-tools-item[href="profile.html"] .home-tools-label { margin-top: 0; align-self: end; font-size: 16px; }
+.home-tools-item[href="profile.html"] .home-tools-sub { align-self: start; margin-top: 0; }
+
+/* الحاسوب: لوحة بنتو من 12 عمودًا */
+@media (min-width: 900px) {
+  .home-tools-panel { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-16); }
+  .home-tools-item[href="lessons.html"]  { grid-column: span 5; min-height: 220px; }
+  .home-tools-item[href="exams.html"]    { grid-column: span 3; min-height: 220px; }
+  .home-tools-item[href="planner.html"]  { grid-column: span 4; min-height: 220px; }
+  .home-tools-item[href="ai.html"]       { grid-column: span 5; min-height: 130px; }
+  .home-tools-item[href="bank.html"]     { grid-column: span 4; min-height: 130px; }
+  .home-tools-item[href="events.html"]   { grid-column: span 3; min-height: 130px; }
+  .home-tools-item[href="profile.html"]  { grid-column: 1 / -1; }
+  .home-tools-item[href="lessons.html"] .home-tools-label { font-size: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-tools-panel .home-tools-item,
+  .home-tools-item[href="ai.html"],
+  .home-tools-item[href="events.html"]::before { animation: none; }
+}
+
+
+/* حالات فارغة: خط قصّ متقطّع */
+.home-empty,
+.home-today-empty {
+  background: var(--color-surface-soft);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.home-today-empty-link { color: var(--color-primary); }
+
+
+/* ============================================================
+   04 — الاختبارات والدروس والإعلانات والملف الشخصي
+   ============================================================ */
+
+/* التصفية والتبويبات: شريط مقسّم، النشط بلون الحبر */
+.ex-filters,
+.ls-tabs,
+.pl-toggle {
+  background: var(--color-surface-soft);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.ex-filter,
+.ls-tab {
+  border-radius: var(--radius-sm);
+  font-weight: var(--fw-bold);
+}
+
+.ex-filter.is-active,
+.ls-tab.is-active,
+.ls-tab[data-kind].is-active {
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
+  box-shadow: none;
+}
+
+/* يوم نشط في المنظّم: نفس لون التحديد (تباين كافٍ مع النص الأبيض) */
+.pl-day-chip.is-active {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+/* قوائم الرئيسية على الشاشات الكبيرة: عمودان */
+@media (min-width: 900px) {
+  #announcementsList,
+  #examsList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* بطاقات القوائم: ورقة بحافة واضحة، وحالتها على الهامش */
+.ex-card,
+.ann-card,
+.ls-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+/* بطاقة إعلان: أيقونة بلون العلامة، والإعلان غير المقروء بحافة جانبية ونقطة */
+.ann-card-icon {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.ann-card-icon .icon { width: 22px; height: 22px; }
+
+.ann-card.is-unread {
+  border-color: var(--color-border);
+  border-inline-start: 4px solid var(--color-primary);
+  background: #FFFAFA;
+  box-shadow: var(--shadow-card);
+}
+
+.ann-card.is-unread .ann-card-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: var(--space-8);
+  border-radius: 50%;
+  background: var(--color-primary);
+  vertical-align: middle;
+}
+
+.ann-card-title { font-size: 16px; font-weight: var(--fw-bold); }
+.ann-card-date { font-weight: var(--fw-medium); }
+.ann-card-body { color: var(--color-text); }
+.ann-card-actions { margin-top: var(--space-4); }
+
+.ex-card:hover,
+.ann-card:hover,
+.ls-card:hover {
+  border-color: var(--color-primary);
+}
+
+.ex-card.is-available         { border-inline-start: 4px solid var(--color-primary); }
+.ex-card.is-result-available  { border-inline-start: 4px solid var(--color-green); }
+
+.ex-card-title,
+.ann-card-title,
+.ls-card-title {
+  font-weight: var(--fw-bold);
+}
+
+.ex-status {
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+}
+
+.ex-action {
+  border-radius: var(--radius-md);
+}
+
+/* أيقونات بطاقات الاختبارات والدروس: لون موحّد، والنتيجة بالأخضر الدلالي */
+.ex-card-icon,
+.ls-card-icon {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.ex-card.is-result-available .ex-card-icon {
+  background: var(--color-green-light);
+  color: var(--color-green-dark);
+}
+
+.ex-card-icon .icon,
+.ls-card-icon .icon { width: 24px; height: 24px; }
+
+/* مواقيت الصلاة: أيقونات SVG */
+.prayer-item-compact__icon { color: var(--color-primary-dark); display: inline-flex; }
+.prayer-item-compact__icon .icon { width: 18px; height: 18px; }
+
+/* المنظّم: أزرار التعديل والحذف كأيقونات */
+.pl-task-action { min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; }
+.pl-task-action .icon { width: 18px; height: 18px; }
+.pl-empty-icon { color: var(--color-text-muted); }
+.pl-empty-icon .icon { width: 44px; height: 44px; }
+
+/* الملف الشخصي (.pf-section مجرد غلاف للعنوان والبطاقة: بلا إطار) */
+.pf-section { border: 0; border-radius: 0; box-shadow: none; background: none; }
+
+.pf-info-card,
+.pf-stat,
+.pf-avg-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+/* إحصاءات الملف: أيقونات بلون واحد وقيم بلون النص (التقدّم وحده أخضر) */
+.pf-stat-icon--green,
+.pf-stat-icon--blue,
+.pf-stat-icon--yellow,
+.pf-stat-icon--purple {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.pf-stat-value.is-green,
+.pf-stat-value.is-blue,
+.pf-stat-value.is-yellow,
+.pf-stat-value.is-purple { color: var(--color-text); }
+
+.pf-avatar {
+  border: 3px solid var(--color-primary);
+  box-shadow: none;
+}
+
+.pf-stage-badge {
+  background: var(--color-yellow-light);
+  color: var(--color-yellow-dark);
+  border: 1.5px solid var(--color-yellow);
+  border-radius: var(--radius-sm);
+}
+
+.pf-avg-value,
+.pf-stat-value {
+  font-family: var(--font-english);
+  font-weight: var(--fw-bold);
+}
+
+
+/* ============================================================
+   05 — المنظّم والمساعد الذكي
+   المنظّم: ماركر أصفر. المساعد: بنفسجي (لونه الوظيفي) بنفس الهيكل.
+   ============================================================ */
+
+.pl-welcome {
+  background: var(--color-yellow-light);
+  color: var(--color-text);
+  border: 1px solid var(--color-yellow);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.pl-welcome-greeting {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+}
+
+.pl-progress-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.ai-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.ai-header-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+.ai-header-sub { color: var(--color-text-muted); }
+
+.ai-header-icon {
+  background: var(--color-purple-light);
+  color: var(--color-purple-dark);
+  border-radius: var(--radius-md);
+}
+
+.ai-input-area {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+
+/* المنظّم على الهاتف: صف إضافة المهمة في سطرين بدل التمدد خارج الشاشة */
+@media (max-width: 560px) {
+  .pl-add-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) var(--touch-min);
+  }
+  .pl-add-row > .pl-select { grid-column: 1; }
+  .pl-add-row > .pl-input[type="time"] { grid-column: 2 / 4; min-width: 0; }
+  .pl-add-row > .pl-input[type="text"] { grid-column: 1 / 3; min-width: 0; }
+  .pl-add-row > .pl-add-btn { grid-column: 3; }
+  .pl-select { min-width: 0; }
+}
+
+
+/* ============================================================
+   06 — الدخول والاشتراك
+   بطاقة الدخول = ملصق الكراسة: حافة حبر + ظل مزاح + شريط ماركر.
+   ============================================================ */
+
+.login-page::before,
+.login-page::after,
+.subscribe-page::before,
+.subscribe-page::after {
+  display: none;
+}
+
+.login-brand-icon,
+.subscribe-brand-icon {
+  background: var(--color-primary-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.login-brand-icon .icon,
+.subscribe-brand-icon .icon { color: #FFFFFF; }
+
+.login-brand-name,
+.subscribe-brand-name,
+.login-title,
+.subscribe-card-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0;
+  color: var(--color-primary-dark);
+}
+
+.login-card,
+.subscribe-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lifted);
+}
+
+.login-card::before {
+  height: 4px;
+  background: var(--color-primary);
+}
+
+.login-form .form-input,
+.login-form .form-select {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.login-form .form-input:focus,
+.login-form .form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-light);
+}
+
+/* أزرار الدخول والاشتراك: النمط الموحّد في القسم 00 */
+
+.first-login-notice {
+  background: var(--color-yellow-light);
+  border: 1.5px solid var(--color-yellow);
+}
+
+
+/* ============================================================
+   07 — لوحة الإدارة
+   نفس الهوية لكن أكثف: شريط حبر داكن، بطاقات بحافة، جداول واضحة.
+   ============================================================ */
+
+.adm-header {
+  background: var(--color-dark-section);
+  border-bottom: 4px solid var(--color-yellow);
+}
+
+.adm-header-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+}
+
+.adm-header-badge {
+  background: var(--color-yellow);
+  color: var(--color-text);
+}
+
+.adm-welcome {
+  background: var(--color-primary);
+  border: 2px solid var(--color-primary-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: 4px 4px 0 var(--color-primary-dark);
+}
+
+.adm-welcome-greeting {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+}
+
+.adm-stat,
+.adm-quick {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.adm-stat-value {
+  font-weight: var(--fw-bold);
+}
+
+.adm-quick:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.adm-bottom-nav {
+  background: var(--color-surface);
+  border-top: 2px solid var(--color-primary);
+}
+
+.adm-nav-item.is-active {
+  color: var(--color-primary);
+  box-shadow: inset 0 4px 0 var(--color-yellow);
+}
+
+
+/* ============================================================
+   08 — الحالات والجداول والنوافذ
+   ============================================================ */
+
+.ex-state,
+.ann-state,
+.ls-state,
+.adm-state,
+.empty-state {
+  background: transparent;
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+table {
+  background: var(--color-surface);
+}
+
+thead th {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-weight: var(--fw-bold);
+  text-align: start;
+}
+
+th,
+td {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:nth-child(even) { background: var(--color-bg); }
+tbody tr:hover           { background: var(--color-primary-light); }
+
+.modal,
+.adm-modal {
+  border: 2px solid var(--color-primary-dark);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+}
+
+.modal-title,
+.adm-modal-title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+}
+
+[hidden] { display: none; }
+
+
+/* ============================================================
+   09 — الشاشات الكبيرة
+   ============================================================ */
+
+@media (min-width: 760px) {
+
+  .home-welcome-inner,
+  .home-content,
+  .ex-header-inner,
+  .pf-header-inner,
+  .ann-header-inner,
+  .ls-header-inner,
+  .pl-header-inner {
+    max-width: 880px;
+  }
+
+  .ex-content,
+  .pf-content,
+  .ann-content,
+  .ls-content,
+  .pl-content {
+    max-width: 880px;
+  }
+
+  .home-stats { gap: var(--space-12); }
+
+  .ex-list,
+  .ann-list,
+  .ls-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-12);
+  }
+
+  .adm-content,
+  .adm-header-inner { max-width: 1120px; }
+  .adm-stats-grid   { grid-template-columns: repeat(3, 1fr); }
+  .adm-quick-grid   { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ex-header-icon,
+  .pf-header-icon,
+  .ann-header-icon,
+  .ls-header-icon,
+  .pl-header-icon,
+  .ai-header-icon { transform: none; }
+}

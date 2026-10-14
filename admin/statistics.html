@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1C2B84" />
+  <meta name="description" content="إحصائيات المنصة — منصة أ/ إسماعيل عماد" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>الإحصائيات — لوحة التحكم</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&family=Inter:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Project Styles -->
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/icons.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+
+  <style>
+    /* =========================================================
+       PAGE BASE
+       ========================================================= */
+    .adm-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--color-surface-soft);
+      padding-bottom: calc(var(--safe-bottom) + 90px);
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    .adm-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: calc(var(--safe-top) + 14px) 16px 14px;
+      background: var(--color-dark-section);
+      color: #FFFFFF;
+    }
+
+    .adm-header-inner {
+      max-width: 900px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .adm-back-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.15s ease;
+    }
+    .adm-back-btn:hover { background: rgba(255, 255, 255, 0.15); }
+
+    .adm-header-brand { flex: 1; min-width: 0; }
+
+    .adm-header-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .adm-header-sub {
+      margin: 3px 0 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .adm-header-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.15s ease;
+    }
+    .adm-header-btn:hover { background: rgba(255, 255, 255, 0.15); }
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
+    .adm-content {
+      max-width: 900px;
+      margin-inline: auto;
+      padding: 16px;
+    }
+
+    .stat-section {
+      margin-bottom: 20px;
+    }
+
+    .stat-section-title {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-section-icon { font-size: 16px; }
+
+    /* =========================================================
+       MAIN STATS GRID
+       ========================================================= */
+    .main-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .main-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 14px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .main-stat:hover {
+      transform: translateY(-2px);
+      border-color: rgba(122, 79, 224, 0.35);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .main-stat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .main-stat-icon {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 18px;
+    }
+
+    .main-stat-icon--green  { background: var(--color-green-light); }
+    .main-stat-icon--blue   { background: var(--color-blue-light); }
+    .main-stat-icon--yellow { background: var(--color-yellow-light); }
+    .main-stat-icon--purple { background: var(--color-purple-light); }
+    .main-stat-icon--red    { background: var(--color-red-light); }
+    .main-stat-icon--orange { background: var(--color-orange-light); }
+
+    .main-stat-value {
+      font-family: "Inter", sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--color-text);
+      direction: ltr;
+      line-height: 1.1;
+    }
+
+    .main-stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+    }
+
+    .main-stat-suffix {
+      font-family: var(--font-arabic);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      margin-inline-start: 4px;
+    }
+
+    /* =========================================================
+       CHART — توزيع المراحل
+       ========================================================= */
+    .chart-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .chart-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .chart-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .chart-label {
+      flex-shrink: 0;
+      width: 92px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      line-height: 1.3;
+    }
+
+    .chart-bar-track {
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--color-surface-soft);
+      overflow: hidden;
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: var(--color-purple-dark);
+      transition: width 0.4s ease;
+    }
+
+    .chart-bar-fill--green  { background: var(--color-primary); }
+    .chart-bar-fill--blue   { background: var(--color-blue); }
+    .chart-bar-fill--yellow { background: var(--color-yellow-dark); }
+    .chart-bar-fill--purple { background: var(--color-purple-dark); }
+
+    .chart-value {
+      flex-shrink: 0;
+      min-width: 44px;
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--color-text);
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* =========================================================
+       PERFORMANCE CARD
+       ========================================================= */
+    .perf-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .perf-avg {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .perf-avg-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .perf-avg-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .perf-avg-value {
+      font-family: "Inter", sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--color-green);
+      direction: ltr;
+    }
+
+    .perf-avg-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--color-surface-soft);
+      overflow: hidden;
+    }
+
+    .perf-avg-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      transition: width 0.4s ease;
+    }
+
+    /* =========================================================
+       TOP STUDENTS
+       ========================================================= */
+    .top-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .top-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--color-surface-soft);
+    }
+
+    .top-rank {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--color-yellow-light);
+      color: var(--color-yellow-dark);
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .top-item:nth-child(1) .top-rank {
+      background: #FFD700;
+      color: #6B4A00;
+    }
+
+    .top-item:nth-child(2) .top-rank {
+      background: var(--color-border);
+      color: #444;
+    }
+
+    .top-item:nth-child(3) .top-rank {
+      background: #D8A87A;
+      color: #6B3A1A;
+    }
+
+    .top-name {
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .top-score {
+      flex-shrink: 0;
+      font-family: "Inter", sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--color-green);
+      direction: ltr;
+    }
+
+    /* =========================================================
+       STATES
+       ========================================================= */
+    .adm-state {
+      padding: 44px 20px;
+      text-align: center;
+      border-radius: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+
+    .adm-state-icon { font-size: 40px; margin-bottom: 10px; line-height: 1; }
+
+    .adm-state-title {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .adm-state-text {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Skeleton */
+    .adm-skeleton {
+      height: 90px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, var(--color-border) 25%, var(--color-border) 50%, var(--color-border) 75%);
+      background-size: 200% 100%;
+      animation: adm-shimmer 1.4s ease-in-out infinite;
+    }
+
+    @keyframes adm-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* =========================================================
+       BOTTOM NAV
+       ========================================================= */
+    .adm-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      inset-inline: 0;
+      z-index: 60;
+      display: flex;
+      align-items: stretch;
+      height: 72px;
+      padding-bottom: var(--safe-bottom);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .adm-bottom-nav::-webkit-scrollbar { display: none; }
+
+    .adm-nav-item {
+      flex: 1 0 auto;
+      min-width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 6px;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      transition: color 0.15s ease;
+    }
+
+    .adm-nav-item:hover { color: var(--color-text); }
+    .adm-nav-item.is-active { color: var(--color-purple-dark); }
+
+    .adm-nav-icon { font-size: 18px; line-height: 1; }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (min-width: 600px) {
+      .main-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .main-stats {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    @media (min-width: 700px) {
+      .adm-content { padding: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .main-stat,
+      .chart-bar-fill,
+      .perf-avg-fill {
+        transition: none;
+      }
+      .adm-skeleton { animation: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/screens.css" />
+  <link rel="stylesheet" href="../css/editorial-redesign.css" />
+</head>
+
+<body>
+
+  <div class="adm-page">
+
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header class="adm-header">
+      <div class="adm-header-inner">
+
+        <a href="index.html" class="adm-back-btn" aria-label="رجوع">
+          <span class="icon icon-arrow-forward" aria-hidden="true"></span>
+        </a>
+
+        <div class="adm-header-brand">
+          <h1 class="adm-header-title">الإحصائيات</h1>
+          <p class="adm-header-sub" id="statHeaderSub">تحليلات المنصة</p>
+        </div>
+
+        <button
+          type="button"
+          class="adm-header-btn"
+          id="statRefreshBtn"
+          title="تحديث"
+          aria-label="تحديث"
+        >
+          <span class="icon icon-refresh" aria-hidden="true"></span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- ============================================================
+         CONTENT
+         ============================================================ -->
+    <main class="adm-content">
+
+      <!-- ==============================================
+           LOADING / ERROR
+           ============================================== -->
+      <div id="statSkeleton">
+        <div class="main-stats" style="margin-bottom:20px;">
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+          <div class="adm-skeleton"></div>
+        </div>
+        <div class="adm-skeleton" style="height:180px;margin-bottom:20px;"></div>
+        <div class="adm-skeleton" style="height:140px;"></div>
+      </div>
+
+      <div class="adm-state" id="statError" style="display: none;">
+        <div class="adm-state-icon" aria-hidden="true"><span class="icon icon-warning" aria-hidden="true"></span></div>
+        <h3 class="adm-state-title">تعذر تحميل الإحصائيات</h3>
+        <p class="adm-state-text">تأكد من الاتصال بالإنترنت وحاول مرة أخرى.</p>
+        <button
+          type="button"
+          id="statRetryBtn"
+          style="
+            margin-top: 14px;
+            min-height: 42px;
+            padding: 0 20px;
+            border-radius: 12px;
+            background: var(--color-purple);
+            color: #FFFFFF;
+            font-family: var(--font-arabic);
+            font-size: 13px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 3px 0 var(--color-purple-dark);
+          "
+        >
+          حاول مرة أخرى
+        </button>
+      </div>
+
+      <!-- ==============================================
+           MAIN CONTENT
+           ============================================== -->
+      <div id="statContent" style="display: none;">
+
+        <!-- ==========================================
+             1. MAIN STATS
+             ========================================== -->
+        <section class="stat-section">
+          <h2 class="stat-section-title">
+            <span class="stat-section-icon" aria-hidden="true"><span class="icon icon-chart-bar" aria-hidden="true"></span></span>
+            <span>نظرة عامة</span>
+          </h2>
+
+          <div class="main-stats" id="mainStats">
+            <!-- تُعبأ من JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             2. DISTRIBUTION — توزيع الطلاب
+             ========================================== -->
+        <section class="stat-section">
+          <h2 class="stat-section-title">
+            <span class="stat-section-icon" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></span>
+            <span>توزيع الطلاب حسب المرحلة</span>
+          </h2>
+
+          <div class="chart-card" id="stageDistribution">
+            <!-- تُعبأ من JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             3. PERFORMANCE
+             ========================================== -->
+        <section class="stat-section">
+          <h2 class="stat-section-title">
+            <span class="stat-section-icon" aria-hidden="true"><span class="icon icon-target" aria-hidden="true"></span></span>
+            <span>الأداء</span>
+          </h2>
+
+          <div class="perf-card" id="performanceCard">
+            <!-- تُعبأ من JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             4. TOP STUDENTS
+             ========================================== -->
+        <section class="stat-section">
+          <h2 class="stat-section-title">
+            <span class="stat-section-icon" aria-hidden="true"><span class="icon icon-trophy" aria-hidden="true"></span></span>
+            <span>أفضل الطلاب</span>
+          </h2>
+
+          <div class="top-list" id="topStudents">
+            <!-- تُعبأ من JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             5. USAGE
+             ========================================== -->
+        <section class="stat-section">
+          <h2 class="stat-section-title">
+            <span class="stat-section-icon" aria-hidden="true"><span class="icon icon-sparkles" aria-hidden="true"></span></span>
+            <span>الاستخدام</span>
+          </h2>
+
+          <div class="chart-card" id="usageCard">
+            <!-- تُعبأ من JS -->
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- ============================================================
+         BOTTOM NAV (Admin)
+         ============================================================ -->
+    <nav class="adm-bottom-nav" aria-label="التنقل الإداري">
+
+      <a href="index.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-home" aria-hidden="true"></span></span>
+        <span>الرئيسية</span>
+      </a>
+
+      <a href="students.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-users" aria-hidden="true"></span></span>
+        <span>الطلاب</span>
+      </a>
+
+      <a href="codes.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-key" aria-hidden="true"></span></span>
+        <span>الأكواد</span>
+      </a>
+
+      <a href="announcements.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-announcement" aria-hidden="true"></span></span>
+        <span>إعلانات</span>
+      </a>
+
+      <a href="exams.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-exam-paper" aria-hidden="true"></span></span>
+        <span>اختبارات</span>
+      </a>
+
+      <a href="settings.html" class="adm-nav-item">
+        <span class="adm-nav-icon" aria-hidden="true"><span class="icon icon-settings" aria-hidden="true"></span></span>
+        <span>الإعدادات</span>
+      </a>
+
+    </nav>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script type="module" src="../js/admin-statistics.js"></script>
+
+</body>
+</html>
